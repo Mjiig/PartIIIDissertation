@@ -1,0 +1,32 @@
+\chapter{Introduction}
+The objective of this project was to machine formalise some of the precursors
+required to show that the category of Lawvere Theories and the category of
+l-bijective Csystems are isomorphic, using the Unimath Coq library. 
+
+Lawvere Theories and Csystems are categorical models of
+universal algebras and dependent type theories respectively, and the restriction
+of Csystems to be l-bijective intuitively corresponds to modelling dependent
+type theories which have exactly one context of each length. If only a single
+context of each length exists it is obvious that a context carries no
+information other than the number of variables it contains, which means the type
+theory is exactly as powerful as a universal algebra. We therefore might expect
+the categorical models of them to be equivalent or isomorphic.
+
+A concrete isomorphism between these two categories has been described by Fiore
+and Voevodsky. In order to machine verify this proof a formalisation in Coq is
+required of both categories, the two functors making up the isomorphism and
+proofs that the functors compose to give the identity in both directions. In
+this project I have formalised the category of Lawvere Theories and the
+definition of the functor from Lawvere Theories to Csystems on objects.
+
+\subsection*{Notation}
+In keeping with the style used by Voevodsky in (CITE)(CITE) and within Unimath,
+this dissertation represents composition in the slightly unconventional
+diagrammatic order, such that for functions $(f\circ g)(x) = g(f(x))$. In a
+general category, given the following diagram:
+\[
+\begin{tikzcd}
+    A\ar[r,"f"]&B\ar[r,"g"]&C
+\end{tikzcd}
+\]
+the composition of $f$ and $g$ is written $f\circ g$.
