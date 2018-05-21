@@ -8,6 +8,15 @@
 
 \newcommand{\catname}[1]{\mathbf{#1}}
 
+\lstset{
+    numberstyle=\tiny,
+    basicstyle=\ttfamily\scriptsize,
+    numbers=left,
+    inputencoding=utf8,
+    extendedchars=true,
+    literate={·}{{$\cdot$}}1,
+}
+
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -38,5 +47,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{intro.tex}
 \input{theory.tex}
-
+\input{lawvere.tex}
 \end{document}
