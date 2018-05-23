@@ -4,6 +4,8 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{tikz-cd}
+\usepackage[utf8]{inputenc}
+\usepackage{pmboxdraw}
 \usepackage{listings}
 
 \newcommand{\catname}[1]{\mathbf{#1}}
@@ -14,7 +16,7 @@
     numbers=left,
     inputencoding=utf8,
     extendedchars=true,
-    literate={·}{{$\cdot$}}1,
+    literate={·}{{$\cdot$}}1 {∏}{{$\Pi$}}1 {×}{{$\times$}}1,
 }
 
 \begin{document}
@@ -48,4 +50,5 @@
 \input{intro.tex}
 \input{theory.tex}
 \input{lawvere.tex}
+\input{csystems.tex}
 \end{document}

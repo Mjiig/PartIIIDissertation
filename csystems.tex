@@ -1,0 +1,107 @@
+\chapter{Csystem Formalisation}
+A formalisation of Csystems already exists within the \textit{TypeTheory}
+library distributed by the Unimath project. Unfortunately it defines a Csystem
+to be a C0-system with additional algebraic structure, whereas we need the
+equivalent but simpler definition that a Csystem is a C0-systems in which the
+canonical squares are pullback squares. Therefore we have reformalised Csystems,
+using the definition of a C0system found in the \textit{TypeTheory} library and
+a newly formalised constraint that the canonical squares be pullback squares.
+
+We first discuss some difficulties in formalising a C0-system within Coq.
+Although these have largely been dealt with by the formalisation given in
+\textit{TypeTheory} their effects are still visible when working with Csystems
+in Coq.
+
+\section{Difficulties Formalising C0-systems}
+Consider a canonical square of some C0-system, with $X$ and $Y$ any objects such
+that $ll(X) > 0$.
+\[
+\begin{tikzcd}
+    f^*X\ar[r,"{q(f,X)}"]\ar[d,"p_{f^*X}"]&X\ar[d,"p_X"] \\
+    Y\ar[r,"f"]&ft(X)
+\end{tikzcd}
+\]
+Within a strict dependently type context this diagram is challenging to directly
+represent, because it conceals a complication in the type of the morphism
+$p_{f^*X}$. The diagram draws the morphism from $f^*X$ to $Y$, but the type of
+$p_{f^*X}$ is defined to be a morphism from $f^*X$ to $ft(f^*X)$. Since the
+axioms of C0-systems require that $Y=ft(f^*X)$ this is not an issue, and it
+paper proofs it is safe to use $Y$ and $ft(f^*X)$ interchangeably without
+comment. However Coq requires us to be explicit about use of known equalities to
+move terms from one type to another. For instance instead of 
+\verb|pX (f_star gt0 f)| (which represents $p_{f^*X}$) we could use
+\begin{lstlisting}
+transportf (fun Z => (f_star gt0 f) --> Z) (pX (f_star gt0 f)) eq
+\end{lstlisting}
+where \verb|eq| is a proof that $Y$ and $ft(f^*X)$ are equal. This is
+undesirable both because it is larger than expected and because wrapping the
+morphism in the \verb|transportf| function call makes it much harder to
+manipulate terms involving it using standard lemmas about morphism composition.
+
+An alternative approach is taken by the \textit{TypeTheory} library. For any
+canonical square, a morphism is defined from $ft(f^*X)$ to $Y$, called 
+\verb|C0emor gt0 f| where \verb|gt0| is just the proof that $ll(X)>0$. This
+morphism is exactly the identity on $Y$ transported to the desired type. Using
+this morphism, we can redraw the canonical square as follows,
+\[
+\begin{tikzcd}
+    f^*X\ar[rr,"{q(f,X)}"]\ar[d,"p_{f^*X}"]&&X\ar[d,"p_X"] \\
+    ft(f^*X)\ar[r,"C0emor"]&Y\ar[r,"f"]&ft(X)
+\end{tikzcd}
+\]
+which is exactly equivalent except that all the morphisms have the expected
+types so the paths can be written just as the composition of the stated
+morphisms.
+
+A similar issue arises when reasoning about axiom 6 of the C0-system axioms
+which requires that in this canonical square,
+\[
+\begin{tikzcd}[sep=huge]
+    {id_{ft(X)}^*X}
+    \ar[r, "{q(id_{ft(X)}, X)}"]
+    \ar[d, "p_{id_{ft(X)}^*X}"]&
+    X\ar[d, "p_X"] \\
+    ft(X)
+    \ar[r, "id_{ft(X)}"]&
+    ft(X)
+\end{tikzcd}
+\]
+${id_{ft(X)}^*X} = X$ and $q(id_{ft(X)}, X) = id_X$. The second of these
+constraints is hard to formalise, because $id_X$ is a morphism from $X$ to $X$,
+but $q(id_{ft(X)}, X)$ comes from $id_{ft(X)}^*X$. Although these objects are
+equal to even state this constraint we are required to transport the term, again
+making it more difficult to work with.
+
+\section{Pullback Csystems}
+The formalisation of a pullback Csystem is as follows
+\begin{lstlisting}
+Definition has_canonical_pullbacks (CC : lC0system) := 
+  ∏ (X Y : CC) (gt0: ll X > 0) (f : Y --> ft X), 
+    isPullback 
+      ((C0emor gt0 f) · f )
+      (pX X) 
+      (pX (f_star gt0 f))
+      (q_of_f gt0 f)
+      (C0ax5c gt0 f).
+
+Definition lCsystem' := total2 (fun CC => has_canonical_pullbacks CC).
+\end{lstlisting}
+
+The name \verb|lCsystem'| is used to avoid collision with the definition of
+\verb|lCsystem| in \textit{TypeTheory}. A \verb|lCsystem'| is a C0-system along
+with a proof that its canonical squares are pullbacks.
+
+A proof that the canonical squares are a pullback takes two objects of the
+C0-system, \verb|X| and \verb|Y|, a proof that \verb|ll X > 0| and a morphism
+from \verb|Y| to \verb|ft X| which is enough to specify a canonical square of
+the C0-system, and returns a proof that the specified canonical square is a
+pullback. \verb|isPullback| is defined in \textit{Unimath} and the components of
+the pullback are constructed from terms defined in the formalisation of
+C0-systems. Note that where we might expect to see \verb|f| in the pullback we
+have instead used \verb|(C0emor gt0 f) · f|.
+
+It is also worth noting that we don't need to explicitly construct or take as an
+argument a proof that the canonical squares commutes, since one is necessarily
+given in the C0-system structure. We don't need to worry about the choice of
+proof, since Csystems are small categories so the type of morphisms between any
+two objects is a set and equality proofs between them are unique.
