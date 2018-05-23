@@ -1,11 +1,12 @@
 \chapter{Csystem Formalisation}
 A formalisation of Csystems already exists within the \textit{TypeTheory}
-library distributed by the Unimath project. Unfortunately it defines a Csystem
+library distributed by the UniMath project. Unfortunately it defines a Csystem
 to be a C0-system with additional algebraic structure, whereas we need the
 equivalent but simpler definition that a Csystem is a C0-systems in which the
-canonical squares are pullback squares. Therefore we have reformalised Csystems,
-using the definition of a C0system found in the \textit{TypeTheory} library and
-a newly formalised constraint that the canonical squares be pullback squares.
+canonical squares are pullback squares. Therefore we have separately formalised
+Csystems, using the definition of a C0-system found in the \textit{TypeTheory}
+library and a newly formalised constraint that the canonical squares be pullback
+squares.
 
 We first discuss some difficulties in formalising a C0-system within Coq.
 Although these have largely been dealt with by the formalisation given in
@@ -95,7 +96,7 @@ A proof that the canonical squares are a pullback takes two objects of the
 C0-system, \verb|X| and \verb|Y|, a proof that \verb|ll X > 0| and a morphism
 from \verb|Y| to \verb|ft X| which is enough to specify a canonical square of
 the C0-system, and returns a proof that the specified canonical square is a
-pullback. \verb|isPullback| is defined in \textit{Unimath} and the components of
+pullback. \verb|isPullback| is defined in \textit{UniMath} and the components of
 the pullback are constructed from terms defined in the formalisation of
 C0-systems. Note that where we might expect to see \verb|f| in the pullback we
 have instead used \verb|(C0emor gt0 f) · f|.

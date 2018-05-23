@@ -1,7 +1,7 @@
 \chapter{Introduction}
 The objective of this project was to machine formalise some of the precursors
 required to show that the category of Lawvere Theories and the category of
-l-bijective Csystems are isomorphic, using the Unimath Coq library. 
+l-bijective Csystems are isomorphic, using the \textit{UniMath} Coq library. 
 
 Lawvere Theories and Csystems are categorical models of
 universal algebras and dependent type theories respectively, and the restriction
@@ -12,18 +12,18 @@ information other than the number of variables it contains, which means the type
 theory is exactly as powerful as a universal algebra. We therefore might expect
 the categorical models of them to be equivalent or isomorphic.
 
-A concrete isomorphism between these two categories has been described by Fiore
-and Voevodsky. In order to machine verify this proof a formalisation in Coq is
-required of both categories, the two functors making up the isomorphism and
-proofs that the functors compose to give the identity in both directions. In
+A concrete isomorphism between these two categories has been described by
+Voevodsky and Fiore. In order to machine verify this proof a formalisation in
+Coq is required of both categories, the two functors making up the isomorphism
+and proofs that the functors compose to give the identity in both directions. In
 this project I have formalised the category of Lawvere Theories and the
 definition of the functor from Lawvere Theories to Csystems on objects.
 
 \subsection*{Notation}
-In keeping with the style used by Voevodsky in (CITE)(CITE) and within Unimath,
-this dissertation represents composition in the slightly unconventional
-diagrammatic order, such that for functions $(f\circ g)(x) = g(f(x))$. In a
-general category, given the following diagram:
+In keeping with the style used by Voevodsky in (CITE)(CITE) and within
+\textit{UniMath}, this dissertation represents composition in the slightly
+unconventional diagrammatic order, such that for functions $(f\circ g)(x) =
+g(f(x))$. In a general category, given the following diagram:
 \[
 \begin{tikzcd}
     A\ar[r,"f"]&B\ar[r,"g"]&C

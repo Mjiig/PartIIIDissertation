@@ -16,7 +16,7 @@ itself has no notion of a set so we use types in their place. It is worth
 noting that it is not immediately obvious that \verb|stn(n)| has exactly $n$
 members, since there could conceivably be multiple proofs of $n>x$ for the same
 value of $x$, however this is not the case because for any \verb|a| and \verb|b|
-\textit{Unimath}'s built in type \verb|a>b| has h-level 1.
+\textit{UniMath}'s built in type \verb|a>b| has h-level 1.
 
 Given the definition of \verb|stn| we formalise $F_{mor}(n,m)$ as
 %
@@ -26,7 +26,7 @@ Definition F_mor (n m : nat) := stn(n) -> stn(m).
 %
 which is just the type of functions from the type \verb|stn(n)| to
 \verb|stn(m)|. These two components give the structure of the category $F$,
-which we can encode in \textit{Unimath}
+which we can encode in \textit{UniMath}
 %
 \begin{lstlisting}
 Definition F_ob_mor := precategory_ob_mor_pair nat F_mor.
@@ -123,7 +123,7 @@ Defined.
 We first prove that for any \verb|n|, \verb|stn(n)| is a set. The tactic
 \verb|isofhleveltotal2| reduces this to proving that \verb|nat| and \verb|n>x|
 are both of h-level 2 (for any \verb|x|). That \verb|nat| is a set is a theorem
-proven in \textit{Unimath}. As already mentioned \verb|n>x| is of h-level 1, and
+proven in \textit{UniMath}. As already mentioned \verb|n>x| is of h-level 1, and
 we use \verb|hlevelntosn| to show that it is therefore also of h-level 2.
 
 We can now use \verb|impred| to show that \verb|F_mor n m| is of h-level 2.
@@ -131,7 +131,7 @@ Using \verb|impred| reduces the proof that functions from anything into
 \verb|stn(m)| are of h-level 2 to showing that \verb|stn(m)| is of h-level 2,
 which is established by \verb|stn_isaset|.
 
-Finally given these proofs we can construct a \textit{Unimath} category for $F$
+Finally given these proofs we can construct a \textit{UniMath} category for $F$
 as
 \begin{lstlisting}
 Definition F : category := category_pair F_pre F_has_homsets.
@@ -176,7 +176,7 @@ stn(n+m)$ and if $x\in stn(m)$ then $\iota_2^{n,m}(x)\in stn(n+m)$. Given the
 definitions of the inclusions these results are obvious, but proofs of them are
 needed in the formalisation of the inclusions. The proofs have been formalised
 so as to make best use of the existing theorems about ordering relationships on
-the natural numbers given in \textit{Unimath}.
+the natural numbers given in \textit{UniMath}.
 
 From these we can define the inclusions themselves
 \begin{lstlisting}
@@ -266,11 +266,11 @@ Defined.
 \end{lstlisting}
 
 The second Lawvere Theory axiom, that $L(0)$ be initial, is formalised using an
-already defined concept of initial objects from \textit{Unimath},
+already defined concept of initial objects from \textit{UniMath},
 \begin{lstlisting}
 Definition LT_L0_initial (LT : LT_data) := isInitial (LT_T LT) (LT_L LT 0).
 \end{lstlisting}
-where \verb|isInitial C x| is defined in the obvious way by \textit{Unimath}, as
+where \verb|isInitial C x| is defined in the obvious way by \textit{UniMath}, as
 a function from objects of \verb|C| to morphisms out of \verb|x| along with
 proofs that they are unique.
 
@@ -287,7 +287,7 @@ Definition LT_has_coprods (LT : LT_data) :=
       (#(LT_L LT) (F_inc1 n m)) 
       (#(LT_L LT) (F_inc2 n m)).
 \end{lstlisting}
-where \verb|isBinCoproduct| is similarly defined by \textit{Unimath} in the
+where \verb|isBinCoproduct| is similarly defined by \textit{UniMath} in the
 expected way and \verb|#| gives the function describing the behaviour of a
 functor on morphisms.
 
@@ -306,7 +306,7 @@ Definition LT := total2(fun LT_data : LT_data => is_LT LT_data).
 As before, we first define the basic structure of the morphisms, then the
 constraints upon them and combine the two as a dependent sum. The structure of a
 Lawvere Theory morphism is very simple, since functors are already defined by
-\textit{Unimath}.
+\textit{UniMath}.
 \begin{lstlisting}
 Definition LT_mor_data (A B : LT) := functor (LT_T A) (LT_T B).
 \end{lstlisting}
