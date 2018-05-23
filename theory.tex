@@ -1,14 +1,19 @@
 \chapter{Background Theory}
+This chapter describes the formal definitions of Lawvere Theories and CSystems,
+and attempts to explain the intuition behind how these definitions model
+universal algebras and dependent type theories respectively. It also briefly
+describes the tools and libraries used in the formalisation work.
+
 \section{Lawvere Theories}
 This section gives the definition of a Lawvere Theory along with an intuition
-for how the axioms a Lawvere Theory is required to follow force it to model a
-universal algebra. 
+for how Lawvere Theories model universal algebras and the interpretation of the
+Lawvere Theory axioms. 
 
 \subsection{Universal Algebras}
-A universal algebra is a description of a class of algebraic structures with a
-set of operations obeying a set of equational laws. For example the universal
-algebra describing a monoid has two operations, a nullary operation $e$ and a
-binary operation $\cdot$, which obey the following equations:
+Universal algebra (CITE) provides a general description of classes of algebraic
+structures with operations obeying equational laws. For example the universal
+algebraic description of a monoid has two operations, a nullary operation $e$
+and a binary operation $\cdot$, which obey the following equations:
 \begin{gather*}
     (a\cdot b)\cdot c = a\cdot (b\cdot c) \\
     a \cdot e = a \\
@@ -16,28 +21,37 @@ binary operation $\cdot$, which obey the following equations:
 \end{gather*}
 
 It is important to note that no quantifiers are used in the equations, except
-implicit leading universal quantifiers over variables. This is why the identity
-element must be defined as a nullary operator rather than merely a member of the
-carrier set. However since these ideas are equivalent we write the operator as
-though it were a value.
+implicit leading universal quantifiers over variables. Consequently the obvious
+approach of using an existential quantifier to enforce the existence of an
+identity element is not possible. Instead the identity element must be defined
+as a nullary operator rather than a member of the carrier set. However since
+these ideas are equivalent we write the operator as though it were a value.
 
-\subsection{Example Lawvere Theory in Category of Sets}
-To produce a Lawvere Theory corresponding to this universal algebra, we
-initially consider a category with sets as objects and functions as morphisms,
-and will relax this constraint later. For every natural number $n$ we define the
-set $T_n$ of all terms constructable using the operators of the universal
-algebra (in this case $e$ and $\cdot$) and $n$ distinct free variables, say
+The requirement that all laws be equational unfortunately prevents the
+definition of certain common algebraic structures, such as fields, within
+universal algebra,.
+
+\subsection{Constructing Lawvere Theories in the Category of Sets}
+To produce a Lawvere Theory corresponding to a universal algebra, we initially
+consider a category with sets as objects and functions as morphisms. We will
+relax this constraint later. For every natural number $n$ we define the set
+$T_n$ of all terms constructable using the operators of the universal algebra
+(in the case of monoids $e$ and $\cdot$) and $n$ distinct free variables, say
 $x_0, x_1,\ldots x_{n-1}$, quotiented by the defining equations. These sets are
-the objects of the Lawvere Theory, which we will call $\mathcal{T}$.
+the objects of a category, which we call $\mathcal{T}$.
 
 We let functions between these objects correspond to substitutions. Given a term
 $t$ in $n$ variables $x_0,\ldots x_{n-1}$, we can produce a term in $m$
 variables by substituting each $x_i$ in t for an element of $T_m$, so we expect
-each element of $\mathcal{T}(n, m)$ to correspond to an element of $(T_m)^n$. So
-we have
+each element of $\mathcal{T}(T_n, T_m)$ to correspond to an element of
+$(T_m)^n$. So we have
 
-\[\mathcal{T}(n,m)\cong (T_m)^n\cong ((T_m)^1)^n)\cong (\mathcal{T}(1, m))^n\]
-
+\[
+\mathcal{T}(T_n, T_m)\cong
+(T_m)^n\cong
+((T_m)^1)^n)\cong
+(\mathcal{T}(T_1, T_m))^n
+\]
 which gives us that $T_{n+m}$ must be the coproduct of $T_n$ and
 $T_m$.
 
@@ -48,18 +62,18 @@ obvious that $T_0$ is initial. Secondly, for every function $f: \{1,\ldots n-1\}
 from $T_n$ to $T_m$ that for every $0\leq i\leq n-1$ substitutes $x_i$ with
 $x_{f(i)}$.
 
-\subsection{Lawvere Theories in General}
+\subsection{Lawvere Theories}
 To capture the essential properties of $\mathcal{T}$ in a more general
-categorical context, we first define the category F.
+categorical context, we first define the category F. Let F be the category with
+objects $F_{obj}$, morphisms $F_{mor}$ and identities and composition defined as
+normal for functions where
 \begin{align*}
     stn(n) &= \{x\in \mathbb{N} | x < n\} \\
     F_{obj} &= \mathbb{N} \\
-    F_{mor}(n, m) &= stn(n)\to stn(m)
+    F_{mor}(n, m) &= \{f | f: stn(n)\to stn(m)\}
 \end{align*}
 
-Let F be the category with objects $F_{obj}$, morphisms $F_{mor}$ and identities
-and composition defined as normal for functions. The category $F$ is isomorphic
-to the skeleton category of finite sets.
+The category $F$ is isomorphic to the skeleton category of finite sets.
 
 It is easy to show that $0$ is an initial object in $F$ and that given two
 objects $n$ and $m$ the following is a coproduct structure,
@@ -77,39 +91,41 @@ where
     \iota_2^{n,m}:stn(m)\to& stn(n+m) \\
     x\mapsto&x+n
 \end{align*}
-A Lawvere theory is a pair $(T, L)$ where $T$ is a category and $L$ is a functor
-$L : F \to T$ such that
+A Lawvere theory (CITE) is a pair $(T, L)$ where $T$ is a category and $L$ is a
+functor $L : F \to T$ such that
 \begin{enumerate}
     \item $L$ is a bijection on objects
     \item $L(0)$ is initial in $T$
-    \item $L$ preserves coproducts, meaning the diagram
+    \item $L$ preserves coproducts, meaning that the diagram
     \[
     \begin{tikzcd}
         & L(n)\arrow[d, "L(\iota_1^{n,m})"] \\
         L(m)\arrow[r, "L(\iota_2^{n,m})"] & L(n+m)
     \end{tikzcd}
     \]
-    is a coproduct structure.
+    is a coproduct.
 \end{enumerate}
 
 \subsection{Remark on Opposites}
 The definition given for Lawvere Theories is in terms for the category $F$ and
-requires that the functor $L$ preserves coproducts. This formalisation
-intuitively maps objects of $T$ to sets of terms that can be formed with a given
-set of variables. In this model a morphism $f:A\to B$ maps to a function that
-takes a term in $A$ and produces a term in $B$ by substituting each variable in
-the term for terms in $B$.
+requires that the functor $L$ preserves coproducts. In this formalisation
+objects of $T$ intuitively correspond to sets of terms that can be formed with a
+given set of variables. Under this intuition a morphism $f:A\to B$ corresponds
+to a function that takes a term in $A$ and produces a term in $B$ by
+substituting each variable in the term for terms in $B$.
 
 An (equivalent) alternative formalisation uses the category $F^{op}$ and
-requires that the functor $L$ preserves products. Under this formalisation it
+requires that the functor $L$ preserves products. In this formalisation it
 is more natural to think about objects of $T^{op}$ corresponding to contexts in
 which terms can be formed (although of course unsorted universal algebra
 contexts are completely specified by their length). In this case we can think
 about a morphism $f:B\to A$ as a way of specifying terms for all the variables
-in the context $A$ using only the variables available in context $B$. 
+in the context $A$ using only the variables available in context $B$ (that is,
+the morphism corresponds to a way of constructing the context $A$ from the
+context $B$). 
 
 It is obvious that these two intuitions are equivalent, but some ideas are
-clearer in the first intuition while others are clearer in the second. This
+clearer in the first intuition while others are clearer in the second one. This
 distinction will become more important when we introduce Csystems, as
 unfortunately much of the existing literature uses the first intuition for
 Lawvere Theories and the second intuition for Csystems.
@@ -117,13 +133,36 @@ Lawvere Theories and the second intuition for Csystems.
 \subsection{Extracting an Algebra From a Lawvere Theory}
 Given a Lawvere Theory $(T,L)$ we can produce a universal algebra that it
 corresponds to. For simplicity we consider $(T^{op}, L^{op})$, and for every
-natural number $n$ extract a potentially infinite set of $n$-ary operators
-$L^{op}(n,1)$. Projection morphisms and the product structures in $T^{op}$ can
-be used to create morphisms between contexts that apply operations on some
-members and leave others unaffected. This technique combined with morphism
-composition produces operators that correspond to the composition of other
-operators. An infinite set of defining equations for the algebra are given by
-morphism equalities.
+natural number $n$ extract a set of $n$-ary operators $L^{op}(n,1)$. Projection
+morphisms and the product structures in $T^{op}$ can be used to create morphisms
+between contexts that apply operations on some members and leave others
+unaffected. For instance suppose we have a morphism $f : L^{op}(2)\to L^{op}(1)$
+which corresponds to an operator $\cdot$. Writing $\{x_0,\ldots, x_{n-1}\}$ as
+an intuitive representation of $L^{op}(n)$ we can construct the following
+diagram in $T^{op}$
+\[
+\begin{tikzcd}
+    &\{x_0, x_1, x_2\}
+    \ar[ld, "L^{op}({\pi_{1}^{2,1}})"]
+    \ar[rdd, "L^{op}({\pi_{2}^{2, 1}})"]
+    & \\
+    \{x_0, x_1\}\ar[dd, "f"]&& \\
+    &&\{x_2\} \\
+    \{x_0\cdot x_1\}&& \\
+    &\{x_0\cdot x_1, x_2\}
+    \ar[ul, "L^{op}({\pi_{1}^{1,1}})"]
+    \ar[uur, "L^{op}({\pi_{2}^{1,1}})"]
+    &
+\end{tikzcd}
+\]
+where $\pi_1^{n, m}$ and $\pi_2^{n, m}$ are the opposites of $\iota_1^{n,m}$ and
+$\iota_2^{n,m}$ respectively, so by the preservation of products from $F^{op}$
+to $T^{op}$ we have a unique morphism from $\{x_0, x_1, x_2\}$ to $\{x_0\cdot
+x_1, x_2\}$.
+
+This technique combined with morphism composition produces operators
+that correspond to the composition of other operators. An infinite set of
+defining equations for the algebra are given by morphism equalities.
 
 Notice that given the set based Lawvere Theory for monoids described earlier, an
 infinite family of binary operations are generated, containing operators with
@@ -138,21 +177,21 @@ presentations.
 To give a model for the algebra represented by a Lawvere Theory, say $(T, L)$,
 is to give a functor $M: T^{op}\to \catname{Set}$ which preserves terminal
 objects and finite products. Consequently, on objects $M(L^{op}(1))$ picks out a
-single set $S$ which is the carrier set of the model. Because $M$ preserves
-products $M(L^{op}(n))$ must be isomorphic to $S^n$. The operators of the model
-are given by the behaviour of the functor on morphisms. For instance if the
-algebra contains a nullary operator $e$, as in the case of monoids, it should
-correspond to an element $e'\in T^{op}(0,1)$. Since $M(L^{op}(0))$ is a terminal
-set $M(e')$ picks out a single element of $S$ as expected for a nullary
-operator. Similar logic can be used to show that any $n$-ary operator in the
-universal algebra must be mapped by $M$ to a function $S^n\to S$.
+set $S$ which is the carrier set of the model. Because $M$ preserves products
+$M(L^{op}(n))$ must be isomorphic to $S^n$. The operators of the model are given
+by the behaviour of the functor on morphisms. For instance if the algebra
+contains a nullary operator $e$, as in the case of monoids, it should correspond
+to an element $e'\in T^{op}(0,1)$. Since $M(L^{op}(0))$ is a terminal set
+$M(e')$ picks out a single element of $S$ as expected for a nullary operator.
+Similar logic can be used to show that any $n$-ary operator in the universal
+algebra is mapped by $M$ to a function $S^n\to S$.
 
 Any such functor necessarily gives a model that respects the defining equations
-of the algebra because the functor cannot send equal morphisms to distinct
+of the algebra because the functor sends equal morphisms to equal
 functions, and all the defining equations are represented as morphism
 equalities.
 
-\subsection{Morphisms Between Lawvere Theories}
+\subsection{The Category Of Lawvere Theories}
 We can further define relationships between different Lawvere Theories. Given
 two Lawvere theories $A = (T_1, L_1)$ and $B = (T_2, L_2)$ a morphism
 $\catname{LT}(A, B)$ is a functor $G: T_1\to T_2$ such that $L_1\circ G = L_2$.
@@ -160,12 +199,11 @@ $\catname{LT}(A, B)$ is a functor $G: T_1\to T_2$ such that $L_1\circ G = L_2$.
 We do not explicitly require $G$ to preserve the initial object or coproducts,
 but because both $L_1$ and $L_2$ are required to it must also do so.
 
-Morphisms between Lawvere Theories correspond to specialisation of algebraic
+Morphisms between Lawvere Theories correspond to translations of algebraic
 structures. Similarly to how all models of a group are also models of a monoid,
 if we have a morphism between two Lawvere Theories $G\in \catname{LT}(A, B)$ and
 $M$ a model of $B$, then we have $G^{op}\circ M$ is a model of $A$.
 
-\subsection{The Category of Lawvere Theories}
 We can now define the category of Lawvere Theories $\catname{LT}$ with every
 Lawvere Theory as an object, and the set of morphisms between two Lawvere
 theories defined as above. Identities and composition in $\catname{LT}$ are
@@ -173,6 +211,10 @@ defined as in the category of small categories, and the category axioms are
 therefore trivial.
 
 \section{Csystems}
+This section gives the definition of C0-systems, which are then used to give the
+definition of Csystems. The intuitive correspondence between the C0-system
+axioms and dependent type theory properties is briefly discussed.
+
 \subsection{C0-systems}
 A C0-system is a precursor to the definition of a Csystem, and consists of a
 category, $CC$ and several pieces of additional structure:
@@ -186,8 +228,8 @@ category, $CC$ and several pieces of additional structure:
 \end{enumerate}
 which satisfy a set of axioms,
 \begin{enumerate}
-    \item $ll(X) = 0 \longrightarrow X=pt$.
-    \item $ll(X) > 0 \longrightarrow ll(ft(X)) = ll(X) - 1$.
+    \item $ll(X) = 0 \implies X=pt$.
+    \item $ll(X) > 0 \implies ll(ft(X)) = ll(X) - 1$.
     \item $ft(pt) = pt$.
     \item $pt$ is a final object of CC.
     \item for any $X\in CC$ and $f: Y\to ft(X)$, $ft(f^*X)=Y$ and
@@ -227,9 +269,9 @@ which satisfy a set of axioms,
 The intuition for these axioms is given by the contexts model described
 previously. Each object of $CC$ corresponds to a context of the dependent type
 theory being modelled, with $pt$ as the empty context, $ll(X)$ as the number of
-terms in the context $X$, $ft(X)$ being the context which is identical to $X$
-but with the last term dropped and $p_X$ is a (trivial) mapping which forms the
-context $ft(X)$ given the context $X$.
+variables in the context $X$, $ft(X)$ being the context which is identical to
+$X$ but with the last variable dropped and $p_X$ is a (trivial) mapping which
+forms the context $ft(X)$ given the context $X$.
 
 Finally if we have a pair of contexts $Y$ and $X$, and a mapping which forms all
 but the last element of $X$ from $Y$, encoded by the morphism $f: Y\to ft(X)$,
@@ -252,42 +294,44 @@ restriction here.
 
 \section{Coq/UniMath}
 \subsection{Coq}
-Coq and the UniMath library have been used as the underlying theory for the
-machine formalisation work. Coq is a well established dependently type
-programming language and proof assistant based on the calculus of inductive
+Coq (CITE) and the UniMath library (CITE) have been used as the underlying
+theory for the machine formalisation work. Coq is a well established dependently
+type programming language and proof assistant based on the calculus of inductive
 constructions, with many extensions to the strength of the type theory having
-been added over time. Unlike Isabelle and similar proof assistants Coq is
+been added over time. Unlike Isabelle (CITE) and similar proof assistants Coq is
 constructive unless non-constructive axioms are assumed. 
 
 \subsection{\textit{UniMath}}
 UniMath is a considerably more recent project aiming to formalise the
-foundations of mathematics from a Univalent point of view. It is a large library
-of Coq code containing proofs of various theorems in topics including Category
-Theory, Combinatorics and KTheory. Although UniMath is written in Coq, it
-intentionally uses a restricted version of the Coq type theory, most notably
+foundations of mathematics from a Univalent (CITE) point of view. It is a large
+library of Coq code containing proofs of various theorems in topics including
+Category Theory, Combinatorics and KTheory. Although UniMath is written in Coq,
+it intentionally uses a restricted version of the Coq type theory, most notably
 avoiding the use of generalised inductive types or any automated theorem
 proving. Conversely, the theory is strengthened considerably by assuming the
-univalence axiom, from which theorems such as function extensionality and the
-negation of UIP which are not provable in Coq can be proven. This project does
-not make any direct use of univalence, though function extensionality is used.
+univalence axiom (CITE), from which theorems such as function extensionality and
+the negation of axiom UIP (``uniqueness of identity proofs'' which states that
+for any $x, x'$ if we have $y, y' : x=x'$ then $y=y'$) which are not provable in
+Coq follow. This project does not make any direct use of univalence, though
+function extensionality is used.
 
 \subsection{h-levels}
-Because the univalence axiom is inconsistent with general UIP it is worth
-briefly discussing h-levels which allow the more restricted use of UIP. A type
-$T$ is defined to be constricted if it has exactly one inhabitant, a proof of
-which has type
+Because the univalence axiom is inconsistent with the general form of axiom UIP
+it is worth briefly discussing h-levels which allow us to work as though we have
+a more restricted version of axiom UIP. A type $T$ is defined to be contractible
+if it has exactly one inhabitant, a proof of which has type
 \[isconstr(T) := \Sigma x:T.\ \Pi x':T.\ x=x'\]
 
-A type has h-level $0$ exactly if it is constricted. A type $T$ has h-level
+A type has h-level $0$ exactly if it is contractible. A type $T$ has h-level
 $n+1$ if for any two inhabitants $x, x': T$ the type of equalities between
 $x=x'$ has h-level $n$.
 
 It is fairly easy to see that types of h-level $1$ can have $0$ or $1$
-inhabitants, and that the number of inhabitants of a type of h-level $2$ is not
-bounded. Types of h-level $1$ are referred to as propositions, and types of
-h-level $2$ are referred to as sets. Since, by definition, equalities between
+inhabitants, and that the number of inhabitants of a type of h-level $2$ need
+not be bounded. Types of h-level $1$ are referred to as propositions, and types
+of h-level $2$ are referred to as sets. Since, by definition, equalities between
 elements of a set have h-level $1$ there can be at most a single proof of the
-equality, so we can behave as though we have UIP when working on sets.
+equality, so we can behave as though we have axiom UIP when working on sets.
 
 In this project a number of lemmas regarding h-levels are used which have been
 proven in \textit{UniMath}, such as: a type of h-level $n$ also has h-level
@@ -297,7 +341,7 @@ $n$.
 
 \subsection{\textit{UniMath} and \textit{TypeTheory}}
 The majority of the prewritten definitions and proofs used in this project comes
-directly from the \textit{UniMath} library. This includes foundational
+directly from the \textit{UniMath} library (CITE). This includes foundational
 definitions like h-levels, dependent products and sums, and the natural numbers,
 along with useful lemmas about these definitions and also formalisation of many
 useful notions in category theory, such as categories, small categories and

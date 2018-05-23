@@ -1,23 +1,32 @@
 \chapter{Introduction}
-The objective of this project was to machine formalise some of the precursors
-required to show that the category of Lawvere Theories and the category of
-l-bijective Csystems are isomorphic, using the \textit{UniMath} Coq library. 
+Dependent type theories can be seen as a generalisation of universal algebras in
+a natural way, as both similarly describe sets of terms that can be formed with
+operators and variables, differing only in that dependent type theories consider
+terms under a powerful typing relation, whilst universal algebra terms can be
+seen as all being of a single unstructured type. To be more precise, universal
+algebras are equivalent to dependent type theories in which a type context can
+be described entirely in terms of the number of variables it contains, with no
+additional information about the types of those variables.
 
-Lawvere Theories and Csystems are categorical models of
-universal algebras and dependent type theories respectively, and the restriction
-of Csystems to be l-bijective intuitively corresponds to modelling dependent
-type theories which have exactly one context of each length. If only a single
-context of each length exists it is obvious that a context carries no
-information other than the number of variables it contains, which means the type
-theory is exactly as powerful as a universal algebra. We therefore might expect
-the categorical models of them to be equivalent or isomorphic.
+To capture this generalisation precisely as a theorem we make use of the
+categorical models of universal algebras and dependent type theories, Lawvere
+Theories and Csystems respectively. Dependent type theories restricted such that
+contexts are described entirely by their length are modelled by Csystems
+restricted such that their length functions are bijective. Therefore, the
+equivalence between universal algebras and this kind of restricted dependent
+type theory can be captured by demonstrating an isomorphism between the category
+of Lawvere Theories and the category of l-bijective Csystems.
 
-A concrete isomorphism between these two categories has been described by
-Voevodsky and Fiore. In order to machine verify this proof a formalisation in
-Coq is required of both categories, the two functors making up the isomorphism
-and proofs that the functors compose to give the identity in both directions. In
-this project I have formalised the category of Lawvere Theories and the
-definition of the functor from Lawvere Theories to Csystems on objects.
+A concrete isomorphism has been described by Voevodsky and Fiore on paper. The
+objective of this project was to machine formalise some of the precursors
+required to show that these categories are isomorphic, using the
+\textit{UniMath} Coq library. 
+
+In order to machine verify this proof a formalisation in Coq is required of
+both categories, the two functors making up the isomorphism and proofs that the
+functors compose to give the identity in both directions. In this project I have
+formalised the category of Lawvere Theories and the definition of the functor
+from Lawvere Theories to Csystems on objects.
 
 \subsection*{Notation}
 In keeping with the style used by Voevodsky in (CITE)(CITE) and within
