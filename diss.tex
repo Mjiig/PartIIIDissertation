@@ -5,7 +5,6 @@
 \usepackage{amsfonts}
 \usepackage{tikz-cd}
 \usepackage[utf8]{inputenc}
-\usepackage{pmboxdraw}
 \usepackage{listings}
 
 \newcommand{\catname}[1]{\mathbf{#1}}
@@ -14,9 +13,11 @@
     numberstyle=\tiny,
     basicstyle=\ttfamily\scriptsize,
     numbers=left,
+    breaklines=true,
     inputencoding=utf8,
     extendedchars=true,
-    literate={·}{{$\cdot$}}1 {∏}{{$\Pi$}}1 {×}{{$\times$}}1,
+    literate={·}{{$\cdot$}}1 {∏}{{$\Pi$}}1 {×}{{$\times$}}1 {∑}{{$\Sigma$}}1
+    {⨿}{{$\coprod$}}1 {λ}{{$\lambda$}}1,
 }
 
 \begin{document}
@@ -50,4 +51,5 @@
 \input{theory.tex}
 \input{lawvere.tex}
 \input{csystems.tex}
+\input{ltoc.tex}
 \end{document}

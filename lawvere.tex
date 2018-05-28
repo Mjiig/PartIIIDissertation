@@ -8,24 +8,24 @@ To define the category $F$ we first define $stn$ as
 Definition stn (n : nat) : UU := total2 ( fun x : nat => n > x).
 \end{lstlisting}
 %
-where \verb|total2| is used to define a dependent sum, such that an element of
-\verb|stn(n)| consists of a natural number \verb|x| and a proof that \verb|n| is
-greater than \verb|x|. The type \verb|UU| is the universe of types we are
+where \lstinline|total2| is used to define a dependent sum, such that an element of
+\lstinline|stn(n)| consists of a natural number \lstinline|x| and a proof that \lstinline|n| is
+greater than \lstinline|x|. The type \lstinline|UU| is the universe of types we are
 working in, and informally can be read as meaning we are defining a type. Coq
 itself has no notion of a set so we use types in their place. It is worth
-noting that it is not immediately obvious that \verb|stn(n)| has exactly $n$
+noting that it is not immediately obvious that \lstinline|stn(n)| has exactly $n$
 members, since there could conceivably be multiple proofs of $n>x$ for the same
-value of $x$, however this is not the case because for any \verb|a| and \verb|b|
-\textit{UniMath}'s built in type \verb|a>b| has h-level 1.
+value of $x$, however this is not the case because for any \lstinline|a| and \lstinline|b|
+\textit{UniMath}'s built in type \lstinline|a>b| has h-level 1.
 
-Given the definition of \verb|stn| we formalise $F_{mor}(n,m)$ as
+Given the definition of \lstinline|stn| we formalise $F_{mor}(n,m)$ as
 %
 \begin{lstlisting}
 Definition F_mor (n m : nat) := stn(n) -> stn(m).
 \end{lstlisting}
 %
-which is just the type of functions from the type \verb|stn(n)| to
-\verb|stn(m)|. These two components give the structure of the category $F$,
+which is just the type of functions from the type \lstinline|stn(n)| to
+\lstinline|stn(m)|. These two components give the structure of the category $F$,
 which we can encode in \textit{UniMath}
 %
 \begin{lstlisting}
@@ -79,11 +79,11 @@ Proof.
 Defined.
 \end{lstlisting}
 
-Since Coq can tell that \verb|F_identity m| is just the identity function it
+Since Coq can tell that \lstinline|F_identity m| is just the identity function it
 will apply beta reduction to expressions containing it which, immediately
 eliminates it. Similarly, just expanding the definition of composition leads to
 both sides of the associativity axiom being identical. By combining these proofs
-we get a proof that \verb|F_data| is the structure of a precategory, and can
+we get a proof that \lstinline|F_data| is the structure of a precategory, and can
 use that proof to construct the precategory itself.
 
 \begin{lstlisting}
@@ -98,7 +98,7 @@ Definition F_pre : precategory :=
 \subsection{Homomorphism Sets}
 Although not strictly necessary, we'd like to demonstrate that $F$ is in fact a
 (locally small) category rather than just a precategory. This amounts to proving
-that the type \verb|F_mor n m| is a set,
+that the type \lstinline|F_mor n m| is a set,
 
 \begin{lstlisting}
 Definition stn_isaset (n : nat) : isaset (stn n).
@@ -120,16 +120,16 @@ Proof.
 Defined.
 \end{lstlisting}
 
-We first prove that for any \verb|n|, \verb|stn(n)| is a set. The tactic
-\verb|isofhleveltotal2| reduces this to proving that \verb|nat| and \verb|n>x|
-are both of h-level 2 (for any \verb|x|). That \verb|nat| is a set is a theorem
-proven in \textit{UniMath}. As already mentioned \verb|n>x| is of h-level 1, and
-we use \verb|hlevelntosn| to show that it is therefore also of h-level 2.
+We first prove that for any \lstinline|n|, \lstinline|stn(n)| is a set. The tactic
+\lstinline|isofhleveltotal2| reduces this to proving that \lstinline|nat| and \lstinline|n>x|
+are both of h-level 2 (for any \lstinline|x|). That \lstinline|nat| is a set is a theorem
+proven in \textit{UniMath}. As already mentioned \lstinline|n>x| is of h-level 1, and
+we use \lstinline|hlevelntosn| to show that it is therefore also of h-level 2.
 
-We can now use \verb|impred| to show that \verb|F_mor n m| is of h-level 2.
-Using \verb|impred| reduces the proof that functions from anything into
-\verb|stn(m)| are of h-level 2 to showing that \verb|stn(m)| is of h-level 2,
-which is established by \verb|stn_isaset|.
+We can now use \lstinline|impred| to show that \lstinline|F_mor n m| is of h-level 2.
+Using \lstinline|impred| reduces the proof that functions from anything into
+\lstinline|stn(m)| are of h-level 2 to showing that \lstinline|stn(m)| is of h-level 2,
+which is established by \lstinline|stn_isaset|.
 
 Finally given these proofs we can construct a \textit{UniMath} category for $F$
 as
@@ -187,7 +187,7 @@ Definition F_inc2 (n m : nat) : F_mor m (n+m) :=
   (fun x => tpair _ (n + (pr1 x)) (xn_lt_nm (pr2 x))).
 \end{lstlisting}
 which have the expected behaviour on the numeric part of the input pair, and use
-the above proven lemmas to get the necessary proof that it is in \verb|stn(n)|.
+the above proven lemmas to get the necessary proof that it is in \lstinline|stn(n)|.
 
 We are also required to give, for any object $X$ and morphisms $f: stn(n)\to X$
 and $g: stn(m)\to X$ the unique arrow from $stn(n+m)$ to $X$ such that the
@@ -208,9 +208,9 @@ Definition F_coprod_rect
         (fun p =>  g (tpair _ ((pr1 x) - n) (r n m (pr1 x) p (pr2 x))))
         (natlthorgeh (pr1 x) n).
 \end{lstlisting}
-which uses an existing theorem to establish either \verb|n>x| or \verb|x>=n|. In
-the first case the functions uses the proof of \verb|n>x| to apply \verb|f|. In
-the second case the functions uses \verb|r| to establish \verb|m>x-n| and from
+which uses an existing theorem to establish either \lstinline|n>x| or \lstinline|x>=n|. In
+the first case the functions uses the proof of \lstinline|n>x| to apply \lstinline|f|. In
+the second case the functions uses \lstinline|r| to establish \lstinline|m>x-n| and from
 that can apply g.
 
 Given this function it is possible to construct a term of type
@@ -238,9 +238,9 @@ as
 Definition LT_bij_on_objects (LT : LT_data) := 
   isweq (functor_on_objects (LT_L LT)).
 \end{lstlisting}
-where \verb|(functor_on_objects (LT_L LT))| just gives the function that
-describes the behaviour of $L$ on objects and \verb|isweq| states that the
-function is an equivalence, or a bijection. In fact \verb|functor_on_objects|
+where \lstinline|(functor_on_objects (LT_L LT))| just gives the function that
+describes the behaviour of $L$ on objects and \lstinline|isweq| states that the
+function is an equivalence, or a bijection. In fact \lstinline|functor_on_objects|
 here could be omitted as this coercion is automatic, but it has been kept for
 clarity.
 
@@ -270,8 +270,8 @@ already defined concept of initial objects from \textit{UniMath},
 \begin{lstlisting}
 Definition LT_L0_initial (LT : LT_data) := isInitial (LT_T LT) (LT_L LT 0).
 \end{lstlisting}
-where \verb|isInitial C x| is defined in the obvious way by \textit{UniMath}, as
-a function from objects of \verb|C| to morphisms out of \verb|x| along with
+where \lstinline|isInitial C x| is defined in the obvious way by \textit{UniMath}, as
+a function from objects of \lstinline|C| to morphisms out of \lstinline|x| along with
 proofs that they are unique.
 
 Finally we formalise the requirement that $L$ preserves coproducts, which is
@@ -287,8 +287,8 @@ Definition LT_has_coprods (LT : LT_data) :=
       (#(LT_L LT) (F_inc1 n m)) 
       (#(LT_L LT) (F_inc2 n m)).
 \end{lstlisting}
-where \verb|isBinCoproduct| is similarly defined by \textit{UniMath} in the
-expected way and \verb|#| gives the function describing the behaviour of a
+where \lstinline|isBinCoproduct| is similarly defined by \textit{UniMath} in the
+expected way and \lstinline|#| gives the function describing the behaviour of a
 functor on morphisms.
 
 We can combine all these requirements into a single statement as
@@ -316,7 +316,7 @@ The single constraint on Lawvere Theory morphisms is comparably simple
 Definition is_LT_mor (A B : LT) (G : LT_mor_data A B) := 
   functor_composite (LT_L A) G = (LT_L B).
 \end{lstlisting}
-where \verb|functor_composite| is the standard composition operator on functors.
+where \lstinline|functor_composite| is the standard composition operator on functors.
 
 With these definitions we get the easy definition of a Lawvere Theory morphism
 as
@@ -325,8 +325,8 @@ Definition LT_mor (A B : LT) := total2 (fun mor_data => is_LT_mor A B mor_data).
 \end{lstlisting}
 
 We would like to be certain that this type only contains a single element for
-each functor, which requires to to show that for any \verb|mor_data| it can be
-shown that \verb|is_LT_mor A B mor_data| is of h-level 1. The proof for which is
+each functor, which requires to to show that for any \lstinline|mor_data| it can be
+shown that \lstinline|is_LT_mor A B mor_data| is of h-level 1. The proof for which is
 \begin{lstlisting}
 Lemma LT_ob_set (A : LT) : isaset (LT_T A).
 Proof.
@@ -352,16 +352,16 @@ Defined.
 
 First we establish for any Lawvere Theory $(T, L)$ that the objects of $T$ form
 a set, which follows from the fact that they are in bijection with a set.
-\verb|isofhlevelweqf 2| establishes that is is sufficient to show that the
+\lstinline|isofhlevelweqf 2| establishes that is is sufficient to show that the
 objects of $T$ are in bijection with the natural numbers (which is given) and
-that the natural numbers are of h-level 2 (proven by \verb|isasetnat|).
+that the natural numbers are of h-level 2 (proven by \lstinline|isasetnat|).
 
-Then, for a specified pair of Lawvere Theories \verb|A| and \verb|B| we show
-that the type of functors from \verb|F| to the underlying category of \verb|B|
+Then, for a specified pair of Lawvere Theories \lstinline|A| and \lstinline|B| we show
+that the type of functors from \lstinline|F| to the underlying category of \lstinline|B|
 is a set, which follows from the fact that both the objects and morphisms of the
-underlying category of \verb|B| are sets (using the theorem
-\verb|functor_isaset|). Since \verb|is_LT_mor| is an equality type between
-functors from \verb|F| to the underlying category of \verb|B|, it must be of
+underlying category of \lstinline|B| are sets (using the theorem
+\lstinline|functor_isaset|). Since \lstinline|is_LT_mor| is an equality type between
+functors from \lstinline|F| to the underlying category of \lstinline|B|, it must be of
 h-level 1 as required.
 
 \subsection{Composition and Identities in the Category of Lawvere Theories}
@@ -454,10 +454,10 @@ and proving that the proofs that the functor is a Lawvere Theory morphism are
 equal. In all cases the first half of the equality proof follows trivially from
 standard theorems about the composition of functors. The second half of each
 proof is identical, since for any goal which is an equality between members of
-an h-level 1 type we can use the \verb|proofirrelevance| lemma, after which we
+an h-level 1 type we can use the \lstinline|proofirrelevance| lemma, after which we
 are only required to prove the type is in fact of h-level 1. In this case that
 final proof obligation is just the previously proven lemma
-\verb|is_LT_mor_prop|.
+\lstinline|is_LT_mor_prop|.
 
 \subsection{Lawvere Theory Category}
 The precategory of Lawvere Theories is in fact a category. To prove this we need
