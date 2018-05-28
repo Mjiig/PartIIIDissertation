@@ -1,0 +1,37 @@
+\chapter{Further Work}
+There are two primary possible continuations of this work, firstly completing
+the proof that the category of Lawvere Theories is isomorphic to the category of
+l-bijective Csystems, and secondly proving a similar result to multi-sorted
+Lawvere Theories. This chapter briefly outlines the necessary work for both of
+these extensions.
+
+\section{Full Isomorphism Proof}
+In order to prove that the category of Lawvere Theories is isomorphic to the
+category of l-bijective Csystems we would first need formalisations of both
+categories. This work has contributed a formalisation of the category of Lawvere
+Theories, but the \textit{UniMath} project also lacks a formalisation of the
+category of Csystems, both in \textit{Unimath} and in \textit{TypeTheory}. The
+lack of such a formalisation is the reason this project defined a functor from
+Lawvere Theories to Csystems only on objects.
+
+With such a category defined, along with the subcategory of Csystems which are
+l-bijective, we could define the functor from Lawvere Theories to Csystems on
+morphisms as well, and prove its functorality.
+
+We would then also be able to define the inverse functor from Csystems and
+Csystem morphisms to Lawvere Theories and Lawvere Theory morphisms. Because we
+are interested in doing so only on a subcategory of Csystems we would need to
+concretely formalise the restriction on Csystems to be l-bijective, to specify
+exactly which Csystems teh functor was defined on.
+
+Finally, with both functors defined we would like to show that both possible
+compositions of the functors gives the identity functor. This would formally
+establish that the two categories are isomorphic.
+
+\section{Multi-Sorted Lawvere Theories}
+An extension of the result that the category of Lawvere Theories is isomorphic
+to the category of l-bijective Csystems shows that the category of multi-sorted
+Lawvere Theories is isomorphic to the category of list-bijective Csystems. This
+is a strict generalisation, where the original result can be recovered by
+observing that the natural numbers are in bijection with the type of lists with
+elements drawn from a unit type.
