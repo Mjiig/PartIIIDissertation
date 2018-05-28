@@ -185,7 +185,7 @@ use this coproduct structure very frequently so want to construct an object
 representing it explicitly.
 
 To do so we need a trivial lemma on the natural numbers which is in fact just a
-specialisation of a lemma proven in \textit{Unimath}.
+specialisation of a lemma proven in \textit{UniMath}.
 
 \begin{lstlisting}
 Lemma xminusplus (x : nat) (gt0 : x > 0) : x - 1 + 1 = x.
@@ -242,7 +242,7 @@ We define two different projections on $T^{op}$, one of which will become the
 Csystem projection and the other complements it to give a complete product. For
 the object of length 0 only the first is defined. For all other objects both are
 defined, and we chose the projections to correspond to the inclusions of
-\lstinline|x_corpod| in $T$. In order to differentiate between these two cases we
+\lstinline|x_coprod| in $T$. In order to differentiate between these two cases we
 need to show that for any object either its length is 0 or that it is greater
 than 0, and that this disjunction is decidable. To do this we construct a
 disjunction between the two possibilities for any \lstinline|X|.
