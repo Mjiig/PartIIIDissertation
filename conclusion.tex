@@ -6,21 +6,22 @@ objects. As a part of this formalisation the notion of a Lawvere Theory as well
 as the category of Lawvere Theories have been formalised.
 
 The project illustrates that it is possible to carry out formalisation of
-moderate scale mathematical proofs within the context of Coq and
-\textit{UniMath} but also illustrates many of the difficulties of doing so. The
-possibility for single objects to have many possible names all of which are
-simultaneously relevant ends up generating terms with non-trivial quantities of
-rewriting which are unintuitive to work with. Attempting to modify the
-formalised proof also makes it obvious that formalisation has a high likelihood
-to result in programs that are extremely brittle, and minor modifications in one
-place are liable to result in breaking other terms. This is possibly magnified
-by Coq's use of a tactic system in addition to explicit terms to satisfy proof
+moderate scale mathematical proofs using Coq and \textit{UniMath} but also
+illustrates many of the difficulties of doing so. The possibility for single
+objects to have many possible names all of which are simultaneously relevant
+ends up generating terms with non-trivial quantities of rewriting which can be
+unintuitive to work with. Attempting to modify the formalised proof also makes
+it obvious that formalisation has a high likelihood of resulting in code that is
+extremely brittle, and minor modifications in one place are liable to result in
+many other terms becoming ill defined. It is possible this is magnified by Coq's
+use of a tactic system in addition to explicit terms to satisfy proof
 obligations. The use of tactics still generates terms, which may end up being
-computationally relevant, but does so opaquely so it harder to reason about.
+computationally relevant, but does so opaquely and consequently can generate
+terms that are difficult to reason about.
 
 It may be interesting to compare the complexity of a similar formalisation
 within alternative proof systems and libraries, such as the Coq \textit{HoTT}
 library or the Agda \textit{HoTT-Agda} library, to investigate how much of this
-difficulty is inherent to category theoretic formalisation with a background of
+difficulty is inherent to category theoretic formalisation in the context of
 homotopy type theory, and how much is specific to either \textit{UniMath} or
 Coq.

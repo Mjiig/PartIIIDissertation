@@ -1,4 +1,4 @@
-\chapter{Mapping Lawvere Theories to CSystems}
+\chapter{Mapping Lawvere Theories to Csystems}
 This chapter describes the formalised definition of the functor from the
 category of Lawvere Theories to the category of Csystems on objects. In the
 interests of clarity not all the details of the proof are presented, but only
@@ -70,15 +70,14 @@ Because Coq is aware of the definition of \lstinline|opp_precat T| from this poi
 onwards it nearly always automatically expands the definition in place,
 replacing objects and morphisms in \lstinline|opp_precat T| with objects and
 morphisms in \lstinline|T|. Consequently all the commutative diagrams we need to
-construct to build a Csystem will be inverted from their normal orientation in
+construct to build a C0-system will be inverted from their normal orientation in
 the proofs in this chapter.
 
 \section{Tower Structure}
-In this context, the tower structure of a C0-system refers to the length
-function and the father function, which together define a sequence of objects
-descending from any object in the underlying category to an object of length
-zero. The length function is defined as the inverse of the $L$ functor on
-objects from the Lawvere Theory
+The tower structure of a C0-system refers to the length function and the father
+function, which together define a sequence of objects descending from any object
+in the underlying category to an object of length zero. The length function is
+defined as the inverse of the $L$ functor on objects from the Lawvere Theory
 \begin{lstlisting}
 Definition ll (X:T) := LT_L_inv lt X.
 \end{lstlisting}
@@ -109,10 +108,10 @@ Proof.
 Defined.
 \end{lstlisting}
 
-By unfolding the definition of \lstinline|ft| we get a goal roughly of the form 
-\lstinline|ll(L (ll X - 1)) = ll(X) - 1|. Since \lstinline|ll| is just the inverse of
-\lstinline|L| on objects we can cancel them on the left hand side to get a trivial
-equality. 
+By unfolding the definition of \lstinline|ft| we get a goal of the form
+\lstinline|ll(L (ll X - 1)) = ll(X) - 1|. Since \lstinline|ll| is just the
+inverse of \lstinline|L| on objects we can cancel them on the left hand side to
+get a trivial equality. 
 
 \begin{lstlisting}
 Lemma ft_on_0_is_id (X : T) (q : ll X = 0) : ft X = X.
@@ -126,11 +125,11 @@ Proof.
 Defined.
 \end{lstlisting}
 
-Unfolding \lstinline|ft| we get a goal of the form \lstinline|L (ll X - 1)|. Since the
-value of \lstinline|ll X| is known we can substitute it in to get a goal 
-\lstinline|L (0 - 1)|, which can be reduced to \lstinline|L 0|. If we substitute 
-\lstinline|ll X| for 0 we get \lstinline|L (ll X)| which again allows us to cancel
-\lstinline|L| and \lstinline|ll| to get a trivial equality.
+Unfolding \lstinline|ft| we get a goal of the form \lstinline|L (ll X - 1) = X|.
+Since the value of \lstinline|ll X| is known we can substitute it in to get a
+goal \lstinline|L (0 - 1)| = X, which can be reduced to \lstinline|L 0| = X. If
+we substitute \lstinline|ll X| for 0 we get \lstinline|L (ll X) = X| which again
+allows us to cancel \lstinline|L| and \lstinline|ll| to get a trivial equality.
 
 With these definitions we are able to construct a tower object, which is just a
 tuple of a small category, a definition of \lstinline|ft|, a definition of \lstinline|ll|,
@@ -151,11 +150,11 @@ Definition T_tower : ltower_precat := tpair _ T_op_setcategory T_tower_str.
 
 \section{Coproducts}
 In defining $p_X$ and $q$ we make will make extensive use of the coproducts in
-\lstinline|T|, so to simplify those constructions we first reformulate the coproducts
-into a form that is somewhat easier to reason about in the context of Csystems.
-The first construction takes \lstinline|n, m, c : nat| and a proof that 
-\lstinline|n + m = c| and gives inclusions from \lstinline|n| and \lstinline|m| to \lstinline|c|
-that form a coproduct.
+\lstinline|T|, so to simplify those constructions we first reformulate the
+coproducts into a form that is somewhat easier to reason about in the context of
+C0systems. The first construction takes \lstinline|n, m, c : nat| and a proof
+that \lstinline|n + m = c| and gives inclusions from \lstinline|L n| and
+\lstinline|L m| to \lstinline|L c| that form a coproduct.
 
 \begin{lstlisting}
 Definition general_coprod (n m c : nat) (p : n+m = c) : 
@@ -174,15 +173,15 @@ Defined.
 \end{lstlisting}
 
 The construction is relatively trivial, being exactly the coproducts guaranteed
-by the Lawvere Theory axioms under a renaming. It remains useful because Coq
-often makes it difficult to use a specific equality within a proof without
-rendering the goal ill-typed. Moving the use of the equality into a theorem
-allows us to tightly control what is rewritten and avoid this.
+by the Lawvere Theory axioms under a renaming. The construction is nonetheless
+useful because Coq often makes it difficult to use a specific equality within a
+proof without rendering the goal ill-typed. Moving the use of the equality into
+a lemma allows us to tightly control what is rewritten and avoid this.
 
-We can specialise further still, observing that any object \lstinline|X| in \lstinline|T|
-with a length greater than 0 is the coproduct of \lstinline|ft X| and \lstinline|L 1|. We
-use this coproduct structure very frequently so want to construct an object
-representing it explicitly.
+We can specialise further still, observing that any object \lstinline|X| in
+\lstinline|T| with a length greater than 0 is the coproduct of \lstinline|ft X|
+and \lstinline|L 1|. We use this coproduct structure frequently so want to
+construct an object representing it explicitly.
 
 To do so we need a trivial lemma on the natural numbers which is in fact just a
 specialisation of a lemma proven in \textit{UniMath}.
@@ -234,18 +233,18 @@ Defined.
 \end{lstlisting}
 
 This object is trivial to construct by taking \lstinline|x_is_coprod| and
-reconstructing an almost identical tuple in a different shape, but it allows us
-to use a large number of existing \textit{UniMath} theorems about coproducts.
+reconstructing an almost identical tuple (with different shape), but it allows
+us to use a large number of existing \textit{UniMath} theorems about coproducts.
 
 \section{Projections}
 We define two different projections on $T^{op}$, one of which will become the
 Csystem projection and the other complements it to give a complete product. For
 the object of length 0 only the first is defined. For all other objects both are
 defined, and we chose the projections to correspond to the inclusions of
-\lstinline|x_coprod| in $T$. In order to differentiate between these two cases we
-need to show that for any object either its length is 0 or that it is greater
-than 0, and that this disjunction is decidable. To do this we construct a
-disjunction between the two possibilities for any \lstinline|X|.
+\lstinline|x_coprod| in $T$. In order to differentiate between these two cases
+we need to show that for any object either its length is 0 or greater than 0,
+and that this disjunction is decidable. To do this we construct a disjunction
+between the two possibilities for any \lstinline|X|.
 
 \begin{lstlisting}
 Definition ll_destruct (X : T) : (ll X = 0) ⨿ (ll X > 0).
@@ -260,13 +259,13 @@ Defined.
 \end{lstlisting}
 
 We use a \textit{UniMath} theorem to show that any natural number is equal to 0
-or greater than zero, then destructure this disjunction to modify the paths to
-the form we need.
+or greater than zero, then destructure this disjunction to modify the relations
+to the form we need.
 
-Using \lstinline|ll_destruct| we can define \lstinline|p X| for any \lstinline|X| which will
-become the Csystem projection. Therefore on the object of length 0 it must be
-the identity and on all other objects it should be the opposite of our coproduct
-inclusion. 
+Using \lstinline|ll_destruct| we can define \lstinline|p X| for any
+\lstinline|X| which will become the Csystem projection. Therefore on the object
+of length 0 it must be the identity and on all other objects it should be the
+opposite of our coproduct inclusion. 
 \begin{lstlisting}
 Definition p (X : T) : ft X --> X.
 Proof.
@@ -278,11 +277,11 @@ Proof.
 Defined.
 \end{lstlisting}
 
-We use \lstinline|ll_destruct| to get a proof of either \lstinline|ll X = 0| or 
-\lstinline|ll X > 0|. In the first case we can rewrite our goal \lstinline|ft X --> X| (in
-$T$) to \lstinline|X --> X| and give the identity. In the second case we can use the
-proof that \lstinline|ll X > 0| to construct a coproduct, and give the first
-inclusion.
+We use \lstinline|ll_destruct| to get a proof of either \lstinline|ll X = 0| or
+\lstinline|ll X > 0|. In the first case we can rewrite our goal 
+\lstinline|ft X --> X| (in $T$) to \lstinline|X --> X| and give the identity. 
+In the second case we can use the proof that \lstinline|ll X > 0| to construct 
+a coproduct, and give the first inclusion.
 
 The second projection is just the corresponding inclusion, and is only defined
 when \lstinline|ll X > 0| so can take a proof as argument.
@@ -310,8 +309,8 @@ cannot be in the \lstinline|ll X = 0| case and then just unfolding the definitio
 Finally we define the last components of a Csystem structure, $f^*X$ and $q$.
 
 For any object $X$ and morphism $f : ft(X)\to Y$ (in $T$) we can in fact define
-$f^*X$ entirely in terms of $Y$ because there is a unique object $Z$ such that
-$ft Z = Y$. Consequently we replace the notation $f^*X$ with $child(Y)$, which
+$f^*X$ entirely in terms of $Y$, because there is a unique object $Z$ such that
+$ft(Z) = Y$. Consequently we replace the notation $f^*X$ with $child(Y)$, which
 we define as
 \begin{lstlisting}
 Definition child (Y : T) : T := L (ll Y + 1).
@@ -325,19 +324,19 @@ Lemma ft_ch_id (X : T) : ft (child X) = X.
 Lemma ch_ft_id (X : T) (gt0 : ll X > 0) : child (ft X) = X.
 \end{lstlisting}
 
-We also define the morphism \lstinline|child_proj| which goes from \lstinline|Y| to
-\lstinline|child Y|, and is exactly \lstinline|p| on \lstinline|child Y| but with its type
-rewritten from \lstinline|ft (child Y) --> child Y| to \lstinline|Y --> child Y|. It has
-the following definition,
+We also define the morphism \lstinline|child_proj| which goes from \lstinline|Y|
+to \lstinline|child Y|, and is exactly \lstinline|p| on \lstinline|child Y| but
+with its type rewritten from \lstinline|ft (child Y) --> child Y| to
+\lstinline|Y --> child Y|. It has the following definition,
 \begin{lstlisting}
 Definition child_proj (Y : T) : Y --> child Y := emor Y · (p (child X)).
 \end{lstlisting}
 where \lstinline|emor Y| is the trivial morphism from \lstinline|Y| to 
 \lstinline|ft (child Y)|.
 
-This is sufficient to let us define \lstinline|q|. Given arbitrary \lstinline|X, Y : T|,
-\lstinline|f : ft x --> Y| and \lstinline|gt0 : ll X > 0| we consider the following
-diagram
+Using these definitions we define \lstinline|q|. Given arbitrary 
+\lstinline|X, Y: T|, \lstinline|f : ft x --> Y| and \lstinline|gt0 : ll X > 0| 
+we consider the following diagram
 \[
 \begin{tikzcd}
     child(Y) &
@@ -353,9 +352,9 @@ diagram
 \end{tikzcd}
 \]
 
-Since \lstinline|X| is the coproduct of \lstinline|ft X| and \lstinline|L 1| there is a unique
-morphism from \lstinline|X| to \lstinline|child Y| that makes the diagram commute, and we
-define \lstinline|q| to be this morphism,
+Since \lstinline|X| is the coproduct of \lstinline|ft X| and \lstinline|L 1|
+there is a unique morphism from \lstinline|X| to \lstinline|child Y| that makes
+the diagram commute, and we define \lstinline|q| to be this morphism,
 \begin{lstlisting}
 Definition q (X Y : T) (gt0 : ll X > 0) (f : ft(X) --> Y) : X --> child (Y).
 Proof.
@@ -365,13 +364,14 @@ Defined.
 \end{lstlisting}
 
 The uniqueness of \lstinline|q| is significant, as we will use it to prove that
-various other morphisms are equal to \lstinline|q| when proving the C0-system axioms.
+various other morphisms are equal to \lstinline|q| when proving the C0-system
+axioms.
 
 \section{C0-system axioms}
 In this section we discuss the proofs of the C0-system axioms. The types of all
 the constructed Coq terms are shown, but not all the proofs have been included
-due to their complexity. In these cases a description of the proof methodology
-is given.
+due to their length. In these cases a description of the proof methodology is
+given.
 
 \subsection{An Object of Length 0 is the Unique Point}
 As an extension of the tower structure, we show that the tower is pointed, that
@@ -401,36 +401,37 @@ Proof.
 Defined.
 \end{lstlisting}
 
-The object given is obviously \lstinline|L 0|, which it is easy to prove has length 0
-by the definition of the length function as the inverse of \lstinline|L|. Given some
-other object \lstinline|t1| such that \lstinline|ll t1 = 0| we need to show 
-\lstinline|t1 = L 0|. Using \lstinline|ll t1 = 0| we rewrite the goal to 
-\lstinline|t1 = L (ll t1)| and cancel \lstinline|L| and \lstinline|ll| to get a trivial 
-equality. The final section of the proof establishes that the proof that 
-\lstinline|ll (L 0) = 0| is equal to the proof that \lstinline|ll t1 = 0|, which is 
-trivial since the natural numbers are a set.
+The object given is obviously \lstinline|L 0|, which it is easy to prove has
+length 0 by the definition of the length function as the inverse of
+\lstinline|L|. Given some other object \lstinline|t1| such that 
+\lstinline|ll t1 = 0| we need to show \lstinline|t1 = L 0|. Using 
+\lstinline|ll t1 = 0| we rewrite the goal to \lstinline|t1 = L (ll t1)| and
+cancel \lstinline|L| and \lstinline|ll| to get a trivial equality. The final
+section of the proof establishes that the proof of \lstinline|ll (L 0) = 0| is
+equal to the proof of \lstinline|ll t1 = 0|, which is trivial since the
+natural numbers are a set.
 
 \subsection{The Point is a Terminal Object}
-This axiom requires that \lstinline|L 0| be a terminal object in \lstinline|opp_precat T|
-which is equivalent to showing that it is an initial object in \lstinline|T| by
-duality. This is one of the Lawvere Theory axioms so the proof is entirely
-trivial.
+This axiom requires that \lstinline|L 0| be a terminal object in 
+\lstinline|opp_precat T| which is equivalent to showing that it is an initial
+object in \lstinline|T| by duality. This is one of the Lawvere Theory axioms so
+the proof is trivial.
 
 \subsection{The Canonical Square Commutes}
 The \textit{TypeTheory} formalisation of C0-systems splits this axiom into three
 parts. Firstly we are required to prove that for any \lstinline|Y| the child of
-\lstinline|Y| has a length greater than 0. This property is not actually included in
-many paper definitions of a C0-system, but without it axiom 7 cannot be
-formalised. This property is a trivial consequence of the definition of
+\lstinline|Y| has a length greater than 0. This property is not actually
+included in some paper definitions of a C0-system, but without it axiom 7 cannot
+be formalised. This property is a trivial consequence of the definition of
 \lstinline|child|, and we proved it when we defined \lstinline|child|.
 
-Secondly we are required to prove that that for any \lstinline|Y| the father of the
-child of \lstinline|Y| is \lstinline|Y|, which we have also already done when we defined
-\lstinline|child|.
+Secondly we are required to prove that that for any \lstinline|Y| the father of
+the child of \lstinline|Y| is \lstinline|Y|, which we have also already done
+when we defined \lstinline|child|.
 
 Finally we prove that the canonical square commutes. The proof of this fact is
 fairly short, and is included inline as part of a larger proof so does not have
-a name. We are required to giver a term of type
+a name. We are required to give a term of type
 \begin{lstlisting}
 f · idtomor (ft (child Y)) Y (ft_ch_id Y) · p (child Y) = p X · q X Y gt0 f
 \end{lstlisting}
@@ -438,7 +439,8 @@ Unfolding the definition of \lstinline|q| to a term of the form
 \begin{lstlisting}
 BinCoproductArrow T (x_coprod X gt0) (f · child_proj Y) (...)
 \end{lstlisting}
-and unfolding \lstinline|p| to a term of the form
+where \lstinline|(...)| is a large irrelevant term and unfolding \lstinline|p|
+to a term of the form
 \begin{lstlisting}
 BinCoproductIn1 T (x_coprod X gt0)
 \end{lstlisting}
@@ -449,13 +451,12 @@ BinCoproductIn1 T (x_coprod X gt0) ·
 \end{lstlisting}
 The theorem \lstinline|BinCoproductIn1Commutes| lets us rewrite this entire
 expression to \lstinline|(f · child_proj Y)| which unfolds to the left hand side
-of the goal equality.
+of the goal equality, resulting in a trivial equality.
 
 \subsection{$q$ Preserves Identities}
 On paper this axiom requires to show that $q(id_{ft(X)}, X) = id_{ft(X)}$.
-Because of the requirement to be explicit about rewrites in Coq terms, it is
-slightly more complex in \textit{UniMath}. The term we are asked to find has the
-form
+Because of the requirement to be explicit about rewrites in Coq, it is slightly
+more complex in \textit{UniMath}. The term we are asked to find has the form
 \begin{lstlisting}
 transportf 
   (λ x : T, X --> x) 
@@ -464,9 +465,9 @@ transportf
     = identity X
 \end{lstlisting}
 
-To handle this we prove that \lstinline|q X (ft X) gt0 (identity (ft X))| is
+To handle this we prove that \lstinline|q X (ft X)  gt0 (identity (ft X))| is
 equal to \lstinline|identity X| transported with the same equality in the
-opposite direction, that is
+opposite direction, i.e.
 \begin{lstlisting}
 transportf (λ x : T, X-->x) (!(ch_ft_id X gt0)) (identity X)
 \end{lstlisting}
@@ -500,8 +501,9 @@ diagram
 \]
 
 Since $q$ is the unique coproduct morphism generated for this diagram, to prove
-that $q$ and the transported identity is equivalent to proving that the
-transported identity makes this diagram commute. To do this we prove two lemmas,
+that $q$ and the transported identity are equal is equivalent to proving that
+the transported identity makes this diagram commute. To do this we prove two
+lemmas,
 \begin{lstlisting}
 Lemma id_square_commute (X : T) (eq : X = child (ft X)) : 
   p X · transportf (fun x => X --> x) eq (identity X)
@@ -510,8 +512,8 @@ Lemma id_square_commute (X : T) (eq : X = child (ft X)) :
 Lemma id_line_commute 
   (X : T) (eq : X = child (ft X)) (gt0: ll X > 0) 
   (gt0' : ll (child (ft X)) > 0):
-p2 X gt0 · transportf (fun x => X --> x) eq (identity X)
-  = p2 (child (ft X)) gt0'.
+    p2 X gt0 · transportf (fun x => X --> x) eq (identity X)
+      = p2 (child (ft X)) gt0'.
 \end{lstlisting}
 Both proofs are mathematically very simple, and consist almost entirely of
 finding the appropriate level of abstraction to allow Coq to replace the
@@ -544,10 +546,10 @@ Consider the following diagram in $T$.
 \]
 
 We need to show that the morphism $q(f\cdot g, X)$ is equal to $q(f, X)\cdot
-q(g, child(X))$. Again we exploit the uniqueness of $q$ to show the equality.
-For full formalisation of the proof is long due to a large amount of required
-rewriting and the length of the involved terms, but the structure is relatively
-simple.
+q(g, child(X))$. Again we exploit the uniqueness of $q$ to establish the
+equality. The full formalisation of the proof is long due to a large amount of
+required rewriting and the length of the involved terms, but the structure is
+relatively simple.
 
 First we show that $p(X)\cdot q(f, X)\cdot q(g, child(Y)) = f\cdot g\cdot
 child\_proj(Z)$ which follows easily since the right hand side equals $f\cdot
@@ -556,7 +558,7 @@ the diagram, which equals the left hand side by the commutativity of the right
 square of the diagram.
 
 Secondly we show $p_2(X)\cdot q(f, X)\cdot q(g, child(Y)) = p_2 (child(Z))$.
-Again by the definition of $q$ as a coproduct arrow we have that the triangles
+By the definition of $q$ as a coproduct arrow we have that the triangles
 formed by the top line of the diagram commute, such that the left hand side can
 be rewritten to $p_2(child(Y))\cdot q(g, child(Y))$ which in turn is exactly
 $p_2(child(Z))$.
@@ -570,7 +572,7 @@ Definition LtoC_obj_C0 : lC0system.
 
 \subsection{Pullbacks}
 Finally we are required to show that the canonical squares of the C0-system are
-pullbacks in order to establish that it is a Csystem. Again this proof is long
+pullbacks in order to show that it is a Csystem. Again this proof is long
 in Coq, but relatively simple mathematically. Consider this diagram
 \[
 \begin{tikzcd}[sep=huge]
@@ -595,30 +597,30 @@ in Coq, but relatively simple mathematically. Consider this diagram
 
 We are required to show that there is a unique morphism from $child(Y)$ to $e$
 that makes the diagram commute. Note that this is a pushout square rather than a
-pullback because we are working in the opposite category to the one used in the
-definition of a Csystem.
+pullback because we are working in the opposite category to the underlying
+category of the Csystem.
 
-Because $child(Y)$ is the coproduct of $Y$ and $L 1$ we pick the unique morphism
-$z$ such that $p_2(child(Y)\cdot z = p_2(X)\cdot k$ and $child_proj(Y)\cdot z =
-h$. To show this is a valid pushout morphism it is only required to show that it
-commutes with $h$ and $k$ and that it is initial with this property. That $z$
-commutes with $h$ is trivial as it is one of the defining properties of the
-coproduct morphism. 
+Because $child(Y)$ is the coproduct of $Y$ and $L(1)$ we pick the unique
+morphism $z$ such that $p_2(child(Y)\cdot z = p_2(X)\cdot k$ and
+$child\_proj(Y)\cdot z = h$. To show this is a valid pushout morphism it is only
+required to show that it commutes with $h$ and $k$ and that it is initial with
+this property. That $z$ commutes with $h$ is trivial as it is one of the
+defining properties of the coproduct morphism. 
 
 To show that $z$ commutes with $k$ we use the coproduct structure of $X$. That
-$p_2(X)\cdot k = p_2(X)\cdot q(f, X)\cdot z$ follow from the definition of $q$
+$p_2(X)\cdot k = p_2(X)\cdot q(f, X)\cdot z$ follows from the definition of $q$
 as we have $p_2(X)\cdot q(f, X) = p_2(child(Y))$ in general. It remains to prove
 that $p_X\cdot k = p_X\cdot q(f, X)\cdot z$. By the commutativity of the
 canonical squares the right hand side equals $f\cdot child\_proj(Y)\cdot z$.
 Since we have already proven that $z$ commutes with $h$ we can rewrite this
-$f\cdot h$, and from the givens when constructing pullback morphisms we know
-that $k$ and $h$ commute with the span, so can write this $p_X\cdot k$ as
+$f\cdot h$, and from the givens when constructing a pushout morphism we know
+that $k$ and $h$ commute with the span, so can write this as $p_X\cdot k$ as
 required.
 
 We are also required to prove that $z$ is the unique morphism with these
 properties, but this is entirely trivial on paper because any other such
 morphism would also be a valid coproduct morphism out of $child(Y)$, which is
-definitionally unique. In Coq the result is comparably simple, bug lengthened
+definitionally unique. In Coq the result is comparably simple, but lengthened
 somewhat by various rewrites required to keep terms in useful forms.
 
 Having proven that the canonical squares of the C0-system are pullbacks we have

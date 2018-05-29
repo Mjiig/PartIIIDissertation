@@ -22,22 +22,24 @@ that $ll(X) > 0$.
     Y\ar[r,"f"]&ft(X)
 \end{tikzcd}
 \]
-Within a strict dependently type context this diagram is challenging to directly
-represent, because it conceals a complication in the type of the morphism
-$p_{f^*X}$. The diagram draws the morphism from $f^*X$ to $Y$, but the type of
-$p_{f^*X}$ is defined to be a morphism from $f^*X$ to $ft(f^*X)$. Since the
-axioms of C0-systems require that $Y=ft(f^*X)$ this is not an issue, and it
-paper proofs it is safe to use $Y$ and $ft(f^*X)$ interchangeably without
-comment. However Coq requires us to be explicit about use of known equalities to
-move terms from one type to another. For instance instead of 
+Within a strict dependently typed context this diagram is challenging to
+directly represent, because it conceals a complication in the type of the
+morphism $p_{f^*X}$. The diagram draws the morphism from $f^*X$ to $Y$, but the
+type of $p_{f^*X}$ is defined to be a morphism from $f^*X$ to $ft(f^*X)$. Since
+the axioms of C0-systems require that $Y=ft(f^*X)$ this is not obviously an
+issue, and in paper proofs it is safe to use $Y$ and $ft(f^*X)$ interchangeably
+without comment. However Coq requires us to be explicit about use of equalities
+to move terms from one type to another. For instance instead of 
 \lstinline|pX (f_star gt0 f)| (which represents $p_{f^*X}$) we could use
 \begin{lstlisting}
 transportf (fun Z => (f_star gt0 f) --> Z) (pX (f_star gt0 f)) eq
 \end{lstlisting}
-where \lstinline|eq| is a proof that $Y$ and $ft(f^*X)$ are equal. This is
-undesirable both because it is larger than expected and because wrapping the
-morphism in the \lstinline|transportf| function call makes it much harder to
-manipulate terms involving it using standard lemmas about morphism composition.
+where \lstinline|eq| is a proof that $Y$ and $ft(f^*X)$ are equal, which changes
+the type of the projection from \lstinline|f_star gt0 f --> ft (f_star gt0 f)|
+to \lstinline|f_star gt0 f --> Y|. This is undesirable both because it is a
+significantly larger term and because wrapping the morphism in the
+\lstinline|transportf| function call makes it much harder to manipulate terms
+involving it using standard lemmas about morphism composition.
 
 An alternative approach is taken by the \textit{TypeTheory} library. For any
 canonical square, a morphism is defined from $ft(f^*X)$ to $Y$, called 
@@ -67,7 +69,7 @@ which requires that in this canonical square,
     ft(X)
 \end{tikzcd}
 \]
-${id_{ft(X)}^*X} = X$ and $q(id_{ft(X)}, X) = id_X$. The second of these
+${id_{ft(X)}}^*X = X$ and $q(id_{ft(X)}, X) = id_X$. The second of these
 constraints is hard to formalise, because $id_X$ is a morphism from $X$ to $X$,
 but $q(id_{ft(X)}, X)$ comes from $id_{ft(X)}^*X$. Although these objects are
 equal to even state this constraint we are required to transport the term, again
@@ -89,17 +91,18 @@ Definition lCsystem' := total2 (fun CC => has_canonical_pullbacks CC).
 \end{lstlisting}
 
 The name \lstinline|lCsystem'| is used to avoid collision with the definition of
-\lstinline|lCsystem| in \textit{TypeTheory}. A \lstinline|lCsystem'| is a C0-system along
-with a proof that its canonical squares are pullbacks.
+\lstinline|lCsystem| in \textit{TypeTheory}. An \lstinline|lCsystem'| is a
+C0-system along with a proof that its canonical squares are pullbacks.
 
 A proof that the canonical squares are a pullback takes two objects of the
-C0-system, \lstinline|X| and \lstinline|Y|, a proof that \lstinline|ll X > 0| and a morphism
-from \lstinline|Y| to \lstinline|ft X| which is enough to specify a canonical square of
-the C0-system, and returns a proof that the specified canonical square is a
-pullback. \lstinline|isPullback| is defined in \textit{UniMath} and the components of
-the pullback are constructed from terms defined in the formalisation of
-C0-systems. Note that where we might expect to see \lstinline|f| in the pullback we
-have instead used \lstinline|(C0emor gt0 f) · f|.
+C0-system, \lstinline|X| and \lstinline|Y|, a proof that \lstinline|ll X > 0|
+and a morphism from \lstinline|Y| to \lstinline|ft X| (which is enough to
+specify a canonical square of the C0-system) and returns a proof that the
+specified canonical square is a pullback. \lstinline|isPullback| is defined in
+\textit{UniMath} and the sides of the pullback square are constructed from terms
+defined in the formalisation of C0-systems. Note that where we might expect to
+see \lstinline|f| in the pullback we have instead used 
+\lstinline|(C0emor gt0 f)· f|.
 
 It is also worth noting that we don't need to explicitly construct or take as an
 argument a proof that the canonical squares commutes, since one is necessarily
