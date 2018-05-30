@@ -146,7 +146,8 @@ Definition T_tower_str : ltower_str T_op_setcategory.
     - apply ft_on_0_is_id.
 Defined.
 
-Definition T_tower : ltower_precat := tpair _ T_op_setcategory T_tower_str.
+Definition T_tower : ltower_precat := 
+  tpair _ T_op_setcategory T_tower_str.
 \end{lstlisting}
 
 \section{Coproducts}
@@ -199,9 +200,11 @@ We then give a pair of inclusions from \lstinline|ft X| and \lstinline|L 1| into
 and prove that they have coproduct structure. 
 \begin{lstlisting}
 Definition x_is_coprod (X : T) (gt0 : ll X > 0) : 
-  ∑inc: (ft X)-->X × (L 1)-->X, isBinCoproduct T (ft X) (L 1) X (pr1 inc) (pr2 inc).
+  ∑inc: (ft X)-->X × (L 1)-->X, 
+    isBinCoproduct T (ft X) (L 1) X (pr1 inc) (pr2 inc).
 Proof.
-  pose (c:=general_coprod (ll X - 1) 1 (ll X) (xminusplus (ll X) gt0)).
+  pose (c:=
+    general_coprod (ll X - 1) 1 (ll X) (xminusplus (ll X) gt0)).
   unfold ft.
   pose (q:=LT_L_cancel2 lt X).
   unfold L, ll in c.
@@ -218,7 +221,8 @@ hides the details of the coproduct and allows us to work with it abstractly by
 presenting an interface for extracting the inclusions, coproduct object and
 coproduct arrows.
 \begin{lstlisting}
-Definition x_coprod (X : T) (gt0 : ll X > 0) : BinCoproduct T (ft X) (L 1).
+Definition x_coprod (X : T) (gt0 : ll X > 0) : 
+  BinCoproduct T (ft X) (L 1).
 Proof.
   pose (is_coprod := x_is_coprod X gt0).
   use tpair.
@@ -297,7 +301,8 @@ Defined.
 We also want to be able to interchange between the names \lstinline|p, p2| and the
 literal inclusions of \lstinline|x_coprod| so define a pair of equalities.
 \begin{lstlisting}
-Lemma p_inc (X : T) (gt0 : ll X > 0) : p X = BinCoproductIn1 T (x_coprod X gt0).
+Lemma p_inc (X : T) (gt0 : ll X > 0) :
+  p X = BinCoproductIn1 T (x_coprod X gt0).
 
 Lemma p2_inc (X : T) (gt0 : ll X > 0) : 
   p2 X gt0 = BinCoproductIn2 T (x_coprod X gt0).
@@ -357,10 +362,13 @@ Since \lstinline|X| is the coproduct of \lstinline|ft X| and \lstinline|L 1|
 there is a unique morphism from \lstinline|X| to \lstinline|child Y| that makes
 the diagram commute, and we define \lstinline|q| to be this morphism,
 \begin{lstlisting}
-Definition q (X Y : T) (gt0 : ll X > 0) (f : ft(X) --> Y) : X --> child (Y).
+Definition q (X Y : T) (gt0 : ll X > 0) (f : ft(X) --> Y) :
+  X --> child (Y).
 Proof.
   pose (coprod:= x_coprod X gt0).
-  exact (BinCoproductArrow T coprod (f · child_proj Y) (p2 (child Y) (ll_child_gt0 Y))).
+  exact 
+    (BinCoproductArrow 
+      T coprod (f·child_proj Y) (p2 (child Y) (ll_child_gt0 Y))).
 Defined.
 \end{lstlisting}
 
@@ -379,7 +387,8 @@ As an extension of the tower structure, we show that the tower is pointed, that
 is it has a unique bottom object. 
 
 \begin{lstlisting}
-Definition T_tower_with_p : ltower_precat_and_p := tpair _ T_tower p.
+Definition T_tower_with_p : ltower_precat_and_p := 
+  tpair _ T_tower p.
 
 Definition T_tower_is_pointed : ispointed_type T_tower_with_p.
 Proof.
@@ -434,7 +443,8 @@ Finally we prove that the canonical square commutes. The proof of this fact is
 fairly short, and is included inline as part of a larger proof so does not have
 a name. We are required to give a term of type
 \begin{lstlisting}
-f · idtomor (ft (child Y)) Y (ft_ch_id Y) · p (child Y) = p X · q X Y gt0 f
+f · idtomor (ft (child Y)) Y (ft_ch_id Y) · p (child Y) 
+  = p X · q X Y gt0 f
 \end{lstlisting}
 Unfolding the definition of \lstinline|q| to a term of the form
 \begin{lstlisting}
@@ -474,7 +484,8 @@ transportf (λ x : T, X-->x) (!(ch_ft_id X gt0)) (identity X)
 \end{lstlisting}
 and that we can cancel out two reversing transports.
 \begin{lstlisting}
-Lemma retransport (T : UU) (a b : T) (p : a = b) (P : T -> UU) (Z : P b):
+Lemma retransport 
+  (T : UU) (a b : T) (p : a = b) (P : T -> UU) (Z : P b) :
   transportf P (p) (transportf P (!p) Z) = Z.
 Proof.
   destruct p.
@@ -627,5 +638,6 @@ somewhat by various rewrites required to keep terms in useful forms.
 Having proven that the canonical squares of the C0-system are pullbacks we have
 constructed a CSystem, completing the definition of the functor on objects.
 \begin{lstlisting}
-Definition LtoC_obj : lCsystem' := tpair _ LtoC_obj_C0 LtoC_obj_has_pullbacks.
+Definition LtoC_obj : lCsystem' := 
+  tpair _ LtoC_obj_C0 LtoC_obj_has_pullbacks.
 \end{lstlisting}

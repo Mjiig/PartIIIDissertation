@@ -37,7 +37,7 @@ and composition explicitly,
 \begin{lstlisting}
 Definition F_identity (n : nat) : (F_mor n n) := (fun x => x).
 
-Definition F_comp (a b c : nat) (f : F_mor a b) (g : F_mor b c) :=
+Definition F_comp (a b c : nat) (f : F_mor a b) (g : F_mor b c):=
     fun (x : stn a) => g (f x).
 \end{lstlisting}
 This code gives the identity morphism and morphism composition for $F$, which is
@@ -68,7 +68,8 @@ Proof.
 Defined.
 
 Definition F_assoc_comp 
-  (k l m n : nat) (f : F_mor k l) (g : F_mor l m) (h : F_mor m n) :
+  (k l m n : nat)
+  (f : F_mor k l) (g : F_mor l m) (h : F_mor m n) :
   (f · g) · h = f · (g · h).
 Proof.
   apply idpath.
@@ -202,7 +203,8 @@ Definition F_coprod_rect
       coprod_rect 
         (fun _ => stn k)
         (fun p =>  f (tpair _ (pr1 x) p))
-        (fun p =>  g (tpair _ ((pr1 x) - n) (r n m (pr1 x) p (pr2 x))))
+        (fun p =>  
+          g (tpair _ ((pr1 x) - n) (r n m (pr1 x) p (pr2 x))))
         (natlthorgeh (pr1 x) n).
 \end{lstlisting}
 which uses an existing theorem to establish either \lstinline|n>x| or
@@ -250,16 +252,19 @@ inverse.
 Definition LT_L_inv (lt : LT) : (LT_T lt) -> nat :=
   invmap (LT_L_weq lt).
 
-Lemma LT_L_cancel (lt : LT) (x : nat) : LT_L_inv lt (LT_L lt x) = x.
+Lemma LT_L_cancel (lt : LT) (x : nat) : 
+  LT_L_inv lt (LT_L lt x) = x.
 Proof.
   unfold LT_L_inv.
   apply homotinvweqweq.
 Defined.
   
-Lemma LT_L_cancel2 (lt : LT) (x : LT_T lt) : LT_L lt (LT_L_inv lt x) = x.
+Lemma LT_L_cancel2 (lt : LT) (x : LT_T lt) : 
+  LT_L lt (LT_L_inv lt x) = x.
 Proof.
   unfold LT_L_inv.
-  change (functor_on_objects (LT_L lt)) with (pr1weq (LT_L_weq lt)).
+  change (functor_on_objects (LT_L lt)) 
+    with (pr1weq (LT_L_weq lt)).
   apply homotweqinvweq.
 Defined.
 \end{lstlisting}
@@ -267,7 +272,8 @@ Defined.
 The second Lawvere Theory axiom, that $L(0)$ be initial, is formalised using an
 already defined concept of initial objects from \textit{UniMath},
 \begin{lstlisting}
-Definition LT_L0_initial (LT : LT_data) := isInitial (LT_T LT) (LT_L LT 0).
+Definition LT_L0_initial (LT : LT_data) := 
+  isInitial (LT_T LT) (LT_L LT 0).
 \end{lstlisting}
 where \lstinline|isInitial C x| is defined in the obvious way by
 \textit{UniMath}, as a function from objects of \lstinline|C| to morphisms out
@@ -380,7 +386,9 @@ Proof.
     apply functor_identity_right.
 Defined.
 
-Definition LT_cat_composition (A B C : LT) (G : LT_mor A B) (H: LT_mor B C) : LT_mor A C.
+Definition LT_cat_composition 
+  (A B C : LT) (G : LT_mor A B) (H: LT_mor B C) :
+  LT_mor A C.
 Proof.
   destruct G as [G G_proof].
   destruct H as [H H_proof].
@@ -388,7 +396,8 @@ Proof.
   - exact (functor_composite G H).
   - cbn.
     unfold is_LT_mor.
-    rewrite <- (functor_assoc F (LT_T A) (LT_T B) (LT_T C) (LT_L A) G H).
+    rewrite <- 
+      (functor_assoc F (LT_T A) (LT_T B) (LT_T C) (LT_L A) G H).
     rewrite G_proof.
     rewrite H_proof.
     apply idpath.
