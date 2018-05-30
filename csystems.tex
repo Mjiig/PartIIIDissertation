@@ -1,12 +1,15 @@
 \chapter{Csystem Formalisation}
-A formalisation of Csystems already exists within the \textit{TypeTheory}
-library distributed by the UniMath project. Unfortunately it defines a Csystem
-to be a C0-system with additional algebraic structure, whereas we need the
-equivalent but simpler definition that a Csystem is a C0-systems in which the
-canonical squares are pullback squares. Therefore we have separately formalised
-Csystems, using the definition of a C0-system found in the \textit{TypeTheory}
-library and a newly formalised constraint that the canonical squares be pullback
-squares.
+A formalisation of
+Csystems\footnote{\url{https://github.com/UniMath/TypeTheory/blob/master/TypeTheory/Csystems/lCsystems.v}}
+by Voevodsky already exists within the \textit{TypeTheory} library distributed
+by the UniMath project. Unfortunately it defines a Csystem to be a C0-system
+with additional algebraic structure, whereas we need the equivalent but simpler
+definition that a Csystem is a
+C0-systems\footnote{\url{https://github.com/UniMath/TypeTheory/blob/master/TypeTheory/Csystems/lC0systems.v}}
+in which the canonical squares are pullback squares. Therefore we have
+separately formalised Csystems, using the definition of a C0-system found in the
+\textit{TypeTheory} library and a newly formalised constraint that the canonical
+squares be pullback squares.
 
 We first discuss some difficulties in formalising a C0-system within Coq.
 Although these have largely been dealt with by the formalisation given in
@@ -42,10 +45,16 @@ significantly larger term and because wrapping the morphism in the
 involving it using standard lemmas about morphism composition.
 
 An alternative approach is taken by the \textit{TypeTheory} library. For any
-canonical square, a morphism is defined from $ft(f^*X)$ to $Y$, called 
-\lstinline|C0emor gt0 f| where \lstinline|gt0| is just the proof that $ll(X)>0$. This
-morphism is exactly the identity on $Y$ transported to the desired type. Using
-this morphism, we can redraw the canonical square as follows,
+canonical square, a morphism is defined from $ft(f^*X)$ to $Y$, called
+\lstinline|C0emor gt0 f| where \lstinline|gt0| is just the proof that $ll(X)>0$.
+This morphism is exactly the identity on $Y$ transported to the desired type,
+with a term similar to
+\begin{lstlisting}
+transportf (fun X => X --> Y) (identity Y) eq
+\end{lstlisting}
+where \lstinline|eq| is again an equality between $Y$ and $ft(f^*X)$.
+
+Using this morphism, we can redraw the canonical square as follows,
 \[
 \begin{tikzcd}
     f^*X\ar[rr,"{q(f,X)}"]\ar[d,"p_{f^*X}"]&&X\ar[d,"p_X"] \\
@@ -104,8 +113,9 @@ defined in the formalisation of C0-systems. Note that where we might expect to
 see \lstinline|f| in the pullback we have instead used 
 \lstinline|(C0emor gt0 f)· f|.
 
-It is also worth noting that we don't need to explicitly construct or take as an
-argument a proof that the canonical squares commutes, since one is necessarily
-given in the C0-system structure. We don't need to worry about the choice of
-proof, since Csystems are small categories so the type of morphisms between any
-two objects is a set and equality proofs between them are unique.
+It is also worth noting that we do not need to explicitly construct or take as
+an argument a proof that the canonical squares commute, since one is
+necessarily given in the C0\nobreakdash-system structure. We do not need to
+worry about the choice of proof, since Csystems are small categories so the type
+of morphisms between any two objects is a set and equality proofs between them
+are unique.

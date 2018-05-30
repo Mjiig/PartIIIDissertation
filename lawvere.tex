@@ -1,7 +1,8 @@
 \chapter{Lawvere Theory Formalisation}
 This chapter describes the formalisation of the type of Lawvere Theories and the
 category of Lawvere Theories, including explanation of the majority of the Coq
-code that makes up the formalisation.
+code that makes up the formalisation\footnote{Full code available at
+\url{https://github.com/Mjiig/LawvereTheoryCsystems/blob/master/Lawvere.v}}.
 
 \section{The Category $F$}
 \subsection{Category Structure}
@@ -9,15 +10,16 @@ To define the category $F$ we first define $stn$ as
 \begin{lstlisting}
 Definition stn (n : nat) : UU := total2 ( fun x : nat => n > x).
 \end{lstlisting}
-where \lstinline|total2| is used to define a dependent sum, such that an element of
-\lstinline|stn(n)| consists of a natural number \lstinline|x| and a proof that \lstinline|n| is
-greater than \lstinline|x|. The type \lstinline|UU| is the universe of types we are
-working in, and informally can be read as meaning we are defining a type. Coq
-itself has no notion of a set so we use types in their place. It is worth
-noting that it is not immediately obvious that \lstinline|stn(n)| has exactly $n$
-members, since there could conceivably be multiple proofs of $n>x$ for the same
-value of $x$, however this is not the case because for any \lstinline|a| and \lstinline|b|
-\textit{UniMath}'s built in type \lstinline|a>b| has h-level 1.
+where \lstinline|total2| is used to define a dependent sum, such that an element
+of \lstinline|stn(n)| consists of a natural number \lstinline|x| and a proof
+that \lstinline|n| is greater than \lstinline|x|. The type \lstinline|UU| is the
+universe of types we are working in, and informally can be read as meaning that
+we are defining a type. Coq itself has no notion of a set so we use types in
+their place. It is worth noting that it is not immediately obvious that
+\lstinline|stn(n)| has exactly $n$ members, since there could conceivably be
+multiple proofs of $n>x$ for the same value of $x$, however this is not the case
+because for any \lstinline|a| and \lstinline|b| \textit{UniMath}'s built in type
+\lstinline|a>b| has h-level 1.
 
 Given the definition of \lstinline|stn| we formalise $F_{mor}(n,m)$ as
 \begin{lstlisting}
@@ -91,8 +93,8 @@ Definition F_pre : precategory :=
 
 \subsection{Homomorphism Sets}
 Although not strictly necessary, we would like to demonstrate that $F$ is in
-fact a (locally small) category rather than just a precategory. This amounts to
-proving that the type \lstinline|F_mor n m| is a set,
+fact a category rather than just a precategory. This amounts to proving that the
+type \lstinline|F_mor n m| is a set,
 
 \begin{lstlisting}
 Definition stn_isaset (n : nat) : isaset (stn n).
@@ -186,7 +188,7 @@ the above proven lemmas to get the necessary proof that it is in
 
 We are also required to give, for any object $X$ and morphisms $f: stn(n)\to X$
 and $g: stn(m)\to X$ the unique arrow from $stn(n+m)$ to $X$ such that the
-standard coproduct diagram commutes. To do so we first prove a Lemma of type
+standard coproduct diagram commutes. To do so we first establish a lemma of type
 \begin{lstlisting}
 Lemma r (n m x : nat) (p : x >= n) (q : n+m > x) : m > x - n.
 \end{lstlisting}
@@ -204,8 +206,8 @@ Definition F_coprod_rect
         (natlthorgeh (pr1 x) n).
 \end{lstlisting}
 which uses an existing theorem to establish either \lstinline|n>x| or
-\lstinline|x>=n|. In the first case the functions uses the proof of
-\lstinline|n>x| to apply \lstinline|f|. In the second case the functions uses
+\lstinline|x>=n|. In the first case the function uses the proof of
+\lstinline|n>x| to apply \lstinline|f|. In the second case the function uses
 \lstinline|r| to establish \lstinline|m>x-n| and from that can apply
 \lstinline|g|.
 
@@ -271,8 +273,8 @@ where \lstinline|isInitial C x| is defined in the obvious way by
 \textit{UniMath}, as a function from objects of \lstinline|C| to morphisms out
 of \lstinline|x| along with proofs that they are unique.
 
-Finally we formalise the requirement that $L$ preserves coproducts, which is
-simple given the formalisation of the inclusions,
+Finally we formalise the requirement that $L$ preserves coproducts, using the
+previously formalised inclusions,
 \begin{lstlisting}
 Definition LT_has_coprods (LT : LT_data) := 
   ∏ n m : nat, 
@@ -320,10 +322,10 @@ With these definitions we get the definition of a Lawvere Theory morphism as
 Definition LT_mor (A B : LT) := total2 (fun mor_data => is_LT_mor A B mor_data).
 \end{lstlisting}
 
-We would like to be certain that this type only contains a single element for
-each functor, which requires us to show that for any \lstinline|mor_data| it can
-be shown that \lstinline|is_LT_mor A B mor_data| is of h-level 1. The proof for
-which is
+We would like to be guarantee that there are not multiple elements of this type
+corresponding to the same functor, which requires us to show that for any
+\lstinline|mor_data| that \lstinline|is_LT_mor A B mor_data| is
+of h-level 1. The proof for which is
 \begin{lstlisting}
 Lemma LT_ob_set (A : LT) : isaset (LT_T A).
 Proof.
@@ -491,9 +493,9 @@ Unfortunately it is not possible to go further and prove that the category of
 Lawvere Theories is small. The collection of Lawvere Theories is a proper class,
 which can be proven by observing that the exact value of $L(0)$ for a Lawvere
 theory is not actually significant so long as the structure of the category $T$
-is correct. Hence, given some Lawvere Theory $A = (T, L)$, for any set $S$ we
-can construct a Lawvere Theory $A_S$ which is identical to $A$ except that the
-object $L(0)$ in $T$ has been replaced by $S$ with the category structure
-otherwise identical. Since this gives a unique Lawvere Theory for every set, we
-have an injection from the proper class of all sets to the class of Lawvere
-Theories, so the class of Lawvere Theories is proper.
+is correct. Hence, given some Lawvere Theory $A = (T, L)$, for any set $S\not\in
+\text{Ob}(T)$ we can construct a Lawvere Theory $A_S$ which is identical to
+$A$ except that the object $L(0)$ in $T$ has been replaced by $S$ with the
+category structure otherwise identical. Since this gives a unique Lawvere Theory
+for every such set, we have an injection from a proper class of sets to the
+class of Lawvere Theories, so the class of Lawvere Theories is proper.

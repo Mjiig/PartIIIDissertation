@@ -1,26 +1,28 @@
 \chapter{Introduction}
-Dependent type theories can be seen as a generalisation of universal algebras in
-a natural way, as both similarly describe sets of terms that can be formed with
-operators and variables, differing only in that dependent type theories consider
-terms under a powerful typing relation, whilst universal algebra terms can all
-be seen as having a single unstructured type. To be more precise, universal
-algebras are equivalent to dependent type theories in which a type context can
-be described entirely by the number of variables it contains, with no
-additional information about the types of those variables.
+Dependent type theories (CITE) can be seen as a generalisation of universal
+algebras (CITE) in a natural way, as both similarly describe sets of terms that
+can be formed with operators and variables, differing only in that dependent
+type theories consider terms under a powerful typing relation, whilst universal
+algebra terms can all be seen as having a single unstructured type. To be more
+precise, universal algebras are equivalent to dependent type theories in which a
+context can be described entirely by the number of variables it contains, with
+no additional information about the types of those variables.
 
 To capture this generalisation precisely as a theorem, we make use of the
 categorical models of universal algebras and dependent type theories, Lawvere
-Theories and Csystems respectively. Dependent type theories restricted such that
-contexts are described entirely by their length are modelled by Csystems
-restricted such that their length functions are bijections. Specifically, the
-equivalence between universal algebras and this kind of restricted dependent
-type theory can be captured by demonstrating an isomorphism between the category
-of Lawvere Theories and the category of l-bijective Csystems.
+Theories and Csystems respectively. The concept of the number of variables in a
+context is modelled in Csystems by a length function. Dependent type theories
+restricted such that contexts are described entirely by their length are
+therefore modelled by Csystems restricted such that their length functions are
+bijections. Specifically, the equivalence between universal algebras and this
+kind of restricted dependent type theory can be captured by demonstrating an
+isomorphism between the category of Lawvere Theories and the category of
+l-bijective Csystems.
 
-A concrete isomorphism has been described by Voevodsky and Fiore on paper. The
-objective of this project was to machine formalise some of the precursors
-required to show that these categories are isomorphic, using the
-\textit{UniMath} Coq library. 
+A concrete isomorphism has been described by Voevodsky and Fiore on paper
+(CITE). The objective of this project was to machine formalise some of the
+precursors required to show that these categories are isomorphic, using the
+\textit{UniMath} Coq library (CITE). 
 
 In order to machine verify this proof a formalisation in Coq is required of
 both categories, the two functors making up the isomorphism and proofs that the

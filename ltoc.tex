@@ -2,9 +2,10 @@
 This chapter describes the formalised definition of the functor from the
 category of Lawvere Theories to the category of Csystems on objects. In the
 interests of clarity not all the details of the proof are presented, but only
-the crucial components.
+the crucial components\footnote{The full code can be found at
+\url{https://github.com/Mjiig/LawvereTheoryCsystems/blob/master/LtoC.v}}.
 
-To slightly simplify the proof Coq's context features have been used. The
+To slightly simplify the proof Coq's context features (CITE) have been used. The
 following lines of code at the beginning of the file
 \begin{lstlisting}
 Section LtoC.
@@ -149,7 +150,7 @@ Definition T_tower : ltower_precat := tpair _ T_op_setcategory T_tower_str.
 \end{lstlisting}
 
 \section{Coproducts}
-In defining $p_X$ and $q$ we make will make extensive use of the coproducts in
+In defining $p_X$ and $q$ we will make extensive use of the coproducts in
 \lstinline|T|, so to simplify those constructions we first reformulate the
 coproducts into a form that is somewhat easier to reason about in the context of
 C0systems. The first construction takes \lstinline|n, m, c : nat| and a proof
@@ -425,9 +426,9 @@ included in some paper definitions of a C0-system, but without it axiom 7 cannot
 be formalised. This property is a trivial consequence of the definition of
 \lstinline|child|, and we proved it when we defined \lstinline|child|.
 
-Secondly we are required to prove that that for any \lstinline|Y| the father of
-the child of \lstinline|Y| is \lstinline|Y|, which we have also already done
-when we defined \lstinline|child|.
+Secondly we are required to prove that for any \lstinline|Y| the father of the
+child of \lstinline|Y| is \lstinline|Y|, which we have also already done when we
+defined \lstinline|child|.
 
 Finally we prove that the canonical square commutes. The proof of this fact is
 fairly short, and is included inline as part of a larger proof so does not have
