@@ -1,0 +1,83 @@
+\begin{thebibliography}{10}
+
+\bibitem{itt}
+Per Martin-L{\"o}f.
+\newblock Intuitionistic type theory, 1980.
+\newblock Lecture notes recorded by Giovanni Sambin.
+
+\bibitem{universalalgebra}
+Alfred~North Whitehead.
+\newblock {\em A treatise on universal algebra: with applications}.
+\newblock 1898.
+
+\bibitem{VoevodskyFiore}
+V.~Voevodsky and M.~Fiore.
+\newblock {Lawvere} theories and {C-systems}.
+\newblock {\em Proceedings of the American Mathematical Society}, 2018.
+\newblock To appear.
+
+\bibitem{coq}
+The {Coq} {Development}~{Team}.
+\newblock {\em The {Coq} Proof Assistant Reference Manual, version 8.7},
+  October 2017.
+
+\bibitem{voevodskycsystems}
+V.~{Voevodsky}.
+\newblock {Subsystems and regular quotients of C-systems}.
+\newblock {\em ArXiv e-prints}, June 2014.
+
+\bibitem{Lawvere}
+F.~W. Lawvere.
+\newblock Functorial semantics of algebraic theories and some algebraic
+  problems in the context of functorial semantics of algebraic theories.
+\newblock {\em Reprints in Theory and Applications of Categories, \mbox{\rm
+  No.~5, pp~1--121}}.
+\newblock (Originally published as: Ph.D. thesis, Columbia University, 1963 and
+  in \emph{Reports of the Midwest Category Seminar II}, 1968, 41--61.).
+
+\bibitem{cartmellcsystems1}
+JW~Cartmell.
+\newblock {\em Generalised algebraic theories and contextual categories}.
+\newblock PhD thesis, University of Oxford, 1978.
+
+\bibitem{cartmellcsystems2}
+John Cartmell.
+\newblock Generalised algebraic theories and contextual categories.
+\newblock {\em Annals of Pure and Applied Logic}, 32:209--243, 1986.
+
+\bibitem{UniMath}
+Vladimir Voevodsky, Benedikt Ahrens, Daniel Grayson, et~al.
+\newblock {\em UniMath}: {Univalent} {Mathematics}.
+\newblock Available at \url{https://github.com/UniMath}.
+
+\bibitem{isabelle}
+Lawrence~C Paulson et~al.
+\newblock The isabelle reference manual.
+\newblock Technical report, 2004.
+
+\bibitem{univalence}
+Vladimir Voevodsky.
+\newblock Univalent foundations project, 2010.
+
+\bibitem{TypeTheory}
+Vladimir Voevodsky, Benedikt Ahrens, Daniel Grayson, et~al.
+\newblock Unimath/typetheory.
+\newblock Available at \url{https://github.com/UniMath/TypeTheory}.
+
+\bibitem{FioreVoevodsky}
+M.~Fiore and V.~Voevodsky.
+\newblock Sorted {Lawvere} theories and {C-systems}.
+\newblock Working draft, 2017.
+
+\bibitem{coq-hott}
+A.~{Bauer}, J.~{Gross}, P.~{LeFanu Lumsdaine}, M.~{Shulman}, M.~{Sozeau}, and
+  B.~{Spitters}.
+\newblock {The HoTT Library: A formalization of homotopy type theory in Coq}.
+\newblock {\em ArXiv e-prints}, October 2016.
+
+\bibitem{agda-hott}
+Guillaume Brunerie, Kuen-Bang {Hou (Favonia)}, Evan Cavallo, Eric Finster,
+  Jesper Cockx, Christian Sattler, Chris Jeris, Michael Shulman, et~al.
+\newblock Homotopy type theory in {A}gda.
+
+\end{thebibliography}

@@ -1,12 +1,12 @@
 \chapter{Introduction}
-Dependent type theories (CITE) can be seen as a generalisation of universal
-algebras (CITE) in a natural way, as both similarly describe sets of terms that
-can be formed with operators and variables, differing only in that dependent
-type theories consider terms under a powerful typing relation, whilst universal
-algebra terms can all be seen as having a single unstructured type. To be more
-precise, universal algebras are equivalent to dependent type theories in which a
-context can be described entirely by the number of variables it contains, with
-no additional information about the types of those variables.
+Dependent type theories\cite{itt} can be seen as a generalisation of universal
+algebras\cite{universalalgebra} in a natural way, as both similarly describe
+sets of terms that can be formed with operators and variables, differing only in
+that dependent type theories consider terms under a powerful typing relation,
+whilst universal algebra terms can all be seen as having a single unstructured
+type. To be more precise, universal algebras are equivalent to dependent type
+theories in which a context can be described entirely by the number of variables
+it contains, with no additional information about the types of those variables.
 
 To capture this generalisation precisely as a theorem, we make use of the
 categorical models of universal algebras and dependent type theories, Lawvere
@@ -19,10 +19,10 @@ kind of restricted dependent type theory can be captured by demonstrating an
 isomorphism between the category of Lawvere Theories and the category of
 l-bijective Csystems.
 
-A concrete isomorphism has been described by Voevodsky and Fiore on paper
-(CITE). The objective of this project was to machine formalise some of the
-precursors required to show that these categories are isomorphic, using the
-\textit{UniMath} Coq library (CITE). 
+A concrete isomorphism has been described by Voevodsky and Fiore on
+paper\cite{VoevodskyFiore}. The objective of this project was to machine
+formalise some of the precursors required to show that these categories are
+isomorphic, using the \textit{UniMath} Coq library\cite{coq}. 
 
 In order to machine verify this proof a formalisation in Coq is required of
 both categories, the two functors making up the isomorphism and proofs that the
@@ -31,10 +31,11 @@ formalised the category of Lawvere Theories and the definition of the functor
 from Lawvere Theories to Csystems on objects.
 
 \subsection*{Notation}
-In keeping with the style used by Voevodsky in (CITE)(CITE) and within
-\textit{UniMath}, this dissertation represents composition in the slightly
-unconventional diagrammatic order, such that for functions $(f\circ g)(x) =
-g(f(x))$. In a general category, given the following diagram:
+In keeping with the style used by Voevodsky
+in\cite{VoevodskyFiore}\cite{voevodskycsystems} and within \textit{UniMath},
+this dissertation represents composition in the slightly unconventional
+diagrammatic order, such that for functions $(f\circ g)(x) = g(f(x))$. In a
+general category, given the following diagram:
 \[
 \begin{tikzcd}
     A\ar[r,"f"]&B\ar[r,"g"]&C

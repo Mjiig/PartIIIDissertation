@@ -1,9 +1,9 @@
 \chapter{Background Theory}
-This chapter describes the formal definitions of Lawvere Theories (CITE) and
-Csystems (CITE), and attempts to explain the intuition behind how these
-definitions model universal algebras and dependent type theories respectively.
-It also briefly describes the tools and libraries used in the formalisation
-work.
+This chapter describes the formal definitions of Lawvere Theories\cite{Lawvere}
+and Csystems\cite{cartmellcsystems1}\cite{cartmellcsystems2}, and attempts to
+explain the intuition behind how these definitions model universal algebras and
+dependent type theories respectively. It also briefly describes the tools and
+libraries used in the formalisation work.
 
 \section{Lawvere Theories}
 This section gives the definition of a Lawvere Theory along with an intuition
@@ -11,11 +11,11 @@ for how Lawvere Theories model universal algebras and the intuitive
 interpretation of the Lawvere Theory axioms. 
 
 \subsection{Universal Algebras}
-Universal algebra (CITE) provides a general description of classes of algebraic
-structures with operations obeying equational laws. For example the standard
-universal algebraic description of a monoid has two operations, a nullary
-operation $e$ and a binary operation $\cdot$, which obey the following
-equations:
+Universal algebra\cite{universalalgebra} provides a general description of
+classes of algebraic structures with operations obeying equational laws. For
+example the standard universal algebraic description of a monoid has two
+operations, a nullary operation $e$ and a binary operation $\cdot$, which obey
+the following equations:
 \begin{gather*}
     (a\cdot b)\cdot c = a\cdot (b\cdot c) \\
     a \cdot e = a \\
@@ -96,8 +96,8 @@ where
     \iota_2^{n,m}:stn(m)\to& stn(n+m) \\
     x\mapsto&x+n
 \end{align*}
-A Lawvere theory (CITE) is a pair $(T, L)$ where $T$ is a category and $L$ is a
-functor $L : F \to T$ such that
+A Lawvere theory\cite{Lawvere} is a pair $(T, L)$ where $T$ is a category and
+$L$ is a functor $L : F \to T$ such that
 \begin{enumerate}
     \item $L$ is a bijection on objects
     \item $L(0)$ is initial in $T$
@@ -183,17 +183,17 @@ there is a unique Lawvere Theory for any universal algebra but many possible
 presentations.
 
 \subsection{Models of Lawvere Theories}
-To give a model (CITE) for the algebra represented by a Lawvere Theory, say $(T,
-L)$, is to give a functor $M: T^{op}\to \catname{Set}$ which preserves terminal
-objects and finite products. Consequently, on objects $M(L^{op}(1))$ picks out a
-set $S$ which is the carrier set of the model. Because $M$ preserves products
-$M(L^{op}(n))$ must be isomorphic to $S^n$. The operators of the model are given
-by the behaviour of the functor on morphisms. For instance if the algebra
-contains a nullary operator $e$, as in the case of monoids, it should correspond
-to an element $e'\in T^{op}(0,1)$. Since $M(L^{op}(0))$ is a terminal set
-$M(e')$ picks out an element of $S$ as expected for a nullary operator.
-Similar logic can be used to show that any $n$-ary operator in the universal
-algebra is mapped by $M$ to a function $S^n\to S$.
+To give a model\cite{VoevodskyFiore} for the algebra represented by a Lawvere
+Theory, say $(T, L)$, is to give a functor $M: T^{op}\to \catname{Set}$ which
+preserves terminal objects and finite products. Consequently, on objects
+$M(L^{op}(1))$ picks out a set $S$ which is the carrier set of the model.
+Because $M$ preserves products $M(L^{op}(n))$ must be isomorphic to $S^n$. The
+operators of the model are given by the behaviour of the functor on morphisms.
+For instance if the algebra contains a nullary operator $e$, as in the case of
+monoids, it should correspond to an element $e'\in T^{op}(0,1)$. Since
+$M(L^{op}(0))$ is a terminal set $M(e')$ picks out an element of $S$ as expected
+for a nullary operator. Similar logic can be used to show that any $n$-ary
+operator in the universal algebra is mapped by $M$ to a function $S^n\to S$.
 
 Any such functor necessarily gives a model that respects the defining equations
 of the algebra because the functor sends equal morphisms to equal
@@ -202,8 +202,9 @@ equalities.
 
 \subsection{The Category Of Lawvere Theories}
 We can further define relationships between different Lawvere Theories. Given
-two Lawvere Theories $A = (T_1, L_1)$ and $B = (T_2, L_2)$, a morphism (CITE)
-$\catname{LT}(A, B)$ is a functor $G: T_1\to T_2$ such that $L_1\circ G = L_2$.
+two Lawvere Theories $A = (T_1, L_1)$ and $B = (T_2, L_2)$, a
+morphism\cite{VoevodskyFiore} $\catname{LT}(A, B)$ is a functor $G: T_1\to T_2$
+such that $L_1\circ G = L_2$.
 
 We do not explicitly require $G$ to preserve the initial object or coproducts,
 but because both $L_1$ and $L_2$ are required to it must also do so.
@@ -222,12 +223,14 @@ therefore trivial.
 
 \section{Csystems}
 This section gives the definition of C0-systems, which are then used to give the
-definition of Csystems (CITE). The intuitive correspondence between the
-C0-system axioms and dependent type theory properties is briefly discussed.
+definition of Csystems\cite{cartmellcsystems1}\cite{cartmellcsystems2}. The
+intuitive correspondence between the C0-system axioms and dependent type theory
+properties is briefly discussed.
 
 \subsection{C0-systems}
-A C0-system (CITE) is a precursor to the definition of a Csystem, and consists
-of a category, $CC$ and several pieces of additional structure:
+A C0-system\cite{voevodskycsystems} is a precursor to the definition of a
+Csystem, and consists of a category, $CC$ and several pieces of additional
+structure:
 \begin{enumerate}
     \item a function $ll: \text{Ob}(CC)\to \mathbb{N}$.
     \item an object $pt\in CC$.
@@ -275,8 +278,6 @@ which satisfy a set of axioms,
     q(f, X)$.
 \end{enumerate}
 
-(CITE CSYSTEM PAPER)
-
 The intuition for these axioms is most easily seen in terms of the contexts
 intuition mentioned previously. Each object of $CC$ corresponds to a context of
 the dependent type theory being modelled, with $pt$ as the empty context,
@@ -301,31 +302,33 @@ possible extension.
 
 There is an alternative possible restriction on C0-systems to give Csystems in
 terms of an additional operation and algebraic constraints upon it. The
-restrictions are provably equivalent (CITE) so we deal only with the pullback
-axiomatisation here.
+restrictions are provably equivalent \cite{voevodskycsystems} so we deal only
+with the pullback axiomatisation here.
 
 \section{Coq/\textit{UniMath}}
 \subsection{Coq}
-Coq (CITE) and the \textit{UniMath} library (CITE) have been used as the
-underlying theory for the machine formalisation work. Coq is a well established
-dependently type programming language and proof assistant based on the calculus
-of inductive constructions, with many extensions to the strength of the type
-theory having been added over time. Unlike Isabelle (CITE) and similar proof
-assistants, Coq is constructive unless non-constructive axioms are assumed.
+Coq\cite{coq} and the \textit{UniMath} library\cite{UniMath} have been used as
+the underlying theory for the machine formalisation work. Coq is a well
+established dependently type programming language and proof assistant based on
+the calculus of inductive constructions, with many extensions to the strength of
+the type theory having been added over time. Unlike Isabelle\cite{isabelle} and
+similar proof assistants, Coq is constructive unless non-constructive axioms are
+assumed.
 
 \subsection{\textit{UniMath}}
-\textit{UniMath} is a considerably more recent project aiming to formalise the
-foundations of mathematics from a Univalent (CITE) point of view. It is a large
-library of Coq code containing proofs of various theorems in topics including
-Category Theory, Combinatorics and KTheory. Although \textit{UniMath} is written
-in Coq, it intentionally uses a restricted version of the Coq type theory, most
-notably avoiding the use of general inductive types or any automated theorem
-proving. Conversely, the theory is strengthened considerably by assuming the
-univalence axiom (CITE), from which theorems such as function extensionality and
-the negation of axiom UIP (``Uniqueness of Identity Proofs'' which states that
-for any $x$ and $x'$ if we have $y, y' : x=x'$ then $y=y'$) which are not
-provable in Coq follow. This project does not make any direct use of univalence,
-though function extensionality is used.
+\textit{UniMath}\cite{UniMath} is a considerably more recent project aiming to
+formalise the foundations of mathematics from a Univalent\cite{univalence} point
+of view. It is a large library of Coq code containing proofs of various theorems
+in topics including Category Theory, Combinatorics and KTheory. Although
+\textit{UniMath} is written in Coq, it intentionally uses a restricted version
+of the Coq type theory, most notably avoiding the use of general inductive types
+or any automated theorem proving. Conversely, the theory is strengthened
+considerably by assuming the univalence axiom\cite{univalence}, from which
+theorems such as function extensionality and the negation of axiom UIP
+(``Uniqueness of Identity Proofs'' which states that for any $x$ and $x'$ if we
+have $y, y' : x=x'$ then $y=y'$) which are not provable in Coq follow. This
+project does not make any direct use of univalence, though function
+extensionality is used.
 
 \subsection{h-levels}
 Because the univalence axiom is inconsistent with the general form of axiom UIP
@@ -353,16 +356,16 @@ $n$.
 
 \subsection{\textit{UniMath} and \textit{TypeTheory}}
 The majority of the prewritten definitions and proofs used in this project come
-directly from the \textit{UniMath} library (CITE). This includes foundational
-definitions like h-levels, dependent products and sums, and the natural numbers,
-along with useful lemmas about these definitions and also formalisation of many
-useful notions in category theory, such as categories, small categories and
-functors.
+directly from the \textit{UniMath} library\cite{UniMath}. This includes
+foundational definitions like h-levels, dependent products and sums, and the
+natural numbers, along with useful lemmas about these definitions and also
+formalisation of many useful notions in category theory, such as categories,
+small categories and functors.
 
 However some of the output of the \textit{UniMath} project is not yet considered
 sufficiently stable to be included in the main library. This content is
-available in the \textit{TypeTheory} library (CITE) that is also published by
-the \textit{UniMath} project. A complete definition of C0-systems and Csystems
-is available in this library. This project uses the C0-system definition but not
-the Csystem definition because we prefer the pullback definition of a Csystem,
-which is not used in the \textit{TypeTheory} library.
+available in the \textit{TypeTheory} library\cite{TypeTheory} that is also
+published by the \textit{UniMath} project. A complete definition of C0-systems
+and Csystems is available in this library. This project uses the C0-system
+definition but not the Csystem definition because we prefer the pullback
+definition of a Csystem, which is not used in the \textit{TypeTheory} library.
