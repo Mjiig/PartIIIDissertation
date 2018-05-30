@@ -6,6 +6,12 @@
 \usepackage{tikz-cd}
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \newpage}
 
 \newcommand{\catname}[1]{\mathbf{#1}}
 
@@ -42,7 +48,9 @@
     \vfill
     \normalsize Submitted in partial fulfilment of the
     requirements for the Computer Science Tripos, Part III 
+    \afterpage{\blankpage}
 \end{titlepage}
+\afterpage{\blankpage}
 \noindent I, Angus Hammond of Corpus Christi College, being a candidate for the
 Computer Science Tripos Part III, hereby declare that this report and the work
 described in it are my own work, unaided except as may be specified below, and
