@@ -153,7 +153,7 @@ Definition T_tower : ltower_precat := tpair _ T_op_setcategory T_tower_str.
 In defining $p_X$ and $q$ we will make extensive use of the coproducts in
 \lstinline|T|, so to simplify those constructions we first reformulate the
 coproducts into a form that is somewhat easier to reason about in the context of
-C0systems. The first construction takes \lstinline|n, m, c : nat| and a proof
+C0-systems. The first construction takes \lstinline|n, m, c : nat| and a proof
 that \lstinline|n + m = c| and gives inclusions from \lstinline|L n| and
 \lstinline|L m| to \lstinline|L c| that form a coproduct.
 
@@ -233,9 +233,9 @@ Proof.
 Defined.
 \end{lstlisting}
 
-This object is trivial to construct by taking \lstinline|x_is_coprod| and
-reconstructing an almost identical tuple (with different shape), but it allows
-us to use a large number of existing \textit{UniMath} theorems about coproducts.
+This object is constructed by taking \lstinline|x_is_coprod| and reconstructing
+an almost identical tuple (with different shape), which us to use a large number
+of existing \textit{UniMath} theorems about coproducts.
 
 \section{Projections}
 We define two different projections on $T^{op}$, one of which will become the
@@ -302,9 +302,9 @@ Lemma p_inc (X : T) (gt0 : ll X > 0) : p X = BinCoproductIn1 T (x_coprod X gt0).
 Lemma p2_inc (X : T) (gt0 : ll X > 0) : 
   p2 X gt0 = BinCoproductIn2 T (x_coprod X gt0).
 \end{lstlisting}
-The proofs are omitted for brevity but amount to using \lstinline|gt0| to prove we
-cannot be in the \lstinline|ll X = 0| case and then just unfolding the definitions of
-\lstinline|p| and \lstinline|p2|.
+The proofs are omitted for brevity but amount to using a proof of 
+\lstinline|ll X = 0| to prove we cannot be in the \lstinline|ll X = 0| case and 
+then just unfolding the definitions of \lstinline|p| and \lstinline|p2|.
 
 \section{$f^*X$ and $q$}
 Finally we define the last components of a Csystem structure, $f^*X$ and $q$.
@@ -516,9 +516,9 @@ Lemma id_line_commute
     p2 X gt0 · transportf (fun x => X --> x) eq (identity X)
       = p2 (child (ft X)) gt0'.
 \end{lstlisting}
-Both proofs are mathematically very simple, and consist almost entirely of
-finding the appropriate level of abstraction to allow Coq to replace the
-transported identities with true identities.
+Both proofs are mathematically fairly simple, but in Coq are complicated by the
+need to find the appropriate level of abstraction to allow replacing the
+transported identity with a true identity.
 
 \subsection{$q$ Preserves Composition}
 The final C0-system axiom requires that $q$ respects composition of morphisms.
@@ -615,7 +615,7 @@ that $p_X\cdot k = p_X\cdot q(f, X)\cdot z$. By the commutativity of the
 canonical squares the right hand side equals $f\cdot child\_proj(Y)\cdot z$.
 Since we have already proven that $z$ commutes with $h$ we can rewrite this
 $f\cdot h$, and from the givens when constructing a pushout morphism we know
-that $k$ and $h$ commute with the span, so can write this as $p_X\cdot k$ as
+that $k$ and $h$ commute with the span, so we can write this as $p_X\cdot k$, as
 required.
 
 We are also required to prove that $z$ is the unique morphism with these

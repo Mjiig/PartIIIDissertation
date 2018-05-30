@@ -76,7 +76,7 @@ Defined.
 \end{lstlisting}
 
 Since Coq can tell that \lstinline|F_identity m| is just the identity function it
-will apply beta reduction to expressions containing it which, immediately
+will apply beta reduction to expressions containing it, which immediately
 eliminates it. Similarly, just expanding the definition of composition leads to
 both sides of the associativity axiom being identical. By combining these proofs
 we get a proof that \lstinline|F_data| is the structure of a precategory, and can
@@ -325,7 +325,7 @@ Definition LT_mor (A B : LT) := total2 (fun mor_data => is_LT_mor A B mor_data).
 We would like to be guarantee that there are not multiple elements of this type
 corresponding to the same functor, which requires us to show that for any
 \lstinline|mor_data| that \lstinline|is_LT_mor A B mor_data| is
-of h-level 1. The proof for which is
+of h-level 1. The proof for this is
 \begin{lstlisting}
 Lemma LT_ob_set (A : LT) : isaset (LT_T A).
 Proof.
@@ -351,7 +351,7 @@ Defined.
 
 First we establish for any Lawvere Theory $(T, L)$ that the objects of $T$ form
 a set, which follows from the fact that they are in bijection with a set.
-\lstinline|isofhlevelweqf 2| establishes that is is sufficient to show that the
+\lstinline|isofhlevelweqf 2| establishes that it is sufficient to show that the
 objects of $T$ are in bijection with the natural numbers (which is a given) and
 that the natural numbers are of h-level 2 (proven by \lstinline|isasetnat|).
 
@@ -369,7 +369,7 @@ functor which are already defined in \textit{UniMath}. A tactic proof style is
 used to formalise these, since it allows us to easily give the proof that the
 stated functors are valid Lawvere Theory morphisms inline. Note however that
 the proofs give the functors themselves as exact terms (without rewriting or
-similar) so this part of the resulting term is as trivial as expected.
+similar) so this part of the resulting term is as simple as expected.
 \begin{lstlisting}
 Definition LT_cat_identity (A : LT) : LT_mor A A.
 Proof.

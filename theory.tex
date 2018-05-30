@@ -1,6 +1,6 @@
 \chapter{Background Theory}
 This chapter describes the formal definitions of Lawvere Theories (CITE) and
-CSystems (CITE), and attempts to explain the intuition behind how these
+Csystems (CITE), and attempts to explain the intuition behind how these
 definitions model universal algebras and dependent type theories respectively.
 It also briefly describes the tools and libraries used in the formalisation
 work.
@@ -202,7 +202,7 @@ equalities.
 
 \subsection{The Category Of Lawvere Theories}
 We can further define relationships between different Lawvere Theories. Given
-two Lawvere Theories $A = (T_1, L_1)$ and $B = (T_2, L_2)$ a morphism (CITE)
+two Lawvere Theories $A = (T_1, L_1)$ and $B = (T_2, L_2)$, a morphism (CITE)
 $\catname{LT}(A, B)$ is a functor $G: T_1\to T_2$ such that $L_1\circ G = L_2$.
 
 We do not explicitly require $G$ to preserve the initial object or coproducts,
@@ -361,8 +361,8 @@ functors.
 
 However some of the output of the \textit{UniMath} project is not yet considered
 sufficiently stable to be included in the main library. This content is
-available in the \textit{TypeTheory} library that is also published by the
-\textit{UniMath} project. A complete definition of C0-systems and Csystems is
-available in this library. This project uses the C0-system definition but not
+available in the \textit{TypeTheory} library (CITE) that is also published by
+the \textit{UniMath} project. A complete definition of C0-systems and Csystems
+is available in this library. This project uses the C0-system definition but not
 the Csystem definition because we prefer the pullback definition of a Csystem,
 which is not used in the \textit{TypeTheory} library.
