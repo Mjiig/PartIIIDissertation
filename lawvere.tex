@@ -325,7 +325,8 @@ where \lstinline|functor_composite| is the standard composition operator on func
 
 With these definitions we get the definition of a Lawvere Theory morphism as
 \begin{lstlisting}
-Definition LT_mor (A B : LT) := total2 (fun mor_data => is_LT_mor A B mor_data).
+Definition LT_mor (A B : LT) := 
+  total2 (fun mor_data => is_LT_mor A B mor_data).
 \end{lstlisting}
 
 We would like to be guarantee that there are not multiple elements of this type

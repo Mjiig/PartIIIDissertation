@@ -335,7 +335,8 @@ to \lstinline|child Y|, and is exactly \lstinline|p| on \lstinline|child Y| but
 with its type rewritten from \lstinline|ft (child Y) --> child Y| to
 \lstinline|Y --> child Y|. It has the following definition,
 \begin{lstlisting}
-Definition child_proj (Y : T) : Y --> child Y := emor Y · (p (child X)).
+Definition child_proj (Y : T) : Y --> child Y := 
+  emor Y · (p (child X)).
 \end{lstlisting}
 where \lstinline|emor Y| is the trivial morphism from \lstinline|Y| to 
 \lstinline|ft (child Y)|.
@@ -460,9 +461,9 @@ we get a goal which is an equality with a left hand side of the form
 BinCoproductIn1 T (x_coprod X gt0) · 
     BinCoproductArrow T (x_coprod X gt0) (f · child_proj Y) (...)
 \end{lstlisting}
-The theorem \lstinline|BinCoproductIn1Commutes| lets us rewrite this entire
-expression to \lstinline|(f · child_proj Y)| which unfolds to the left hand side
-of the goal equality, resulting in a trivial equality.
+Using the theorem \lstinline|BinCoproductIn1Commutes| we can rewrite this entire
+expression to the form \lstinline|(f · child_proj Y)| which unfolds to the left
+hand side of the goal equality, resulting in a trivial equality.
 
 \subsection{$q$ Preserves Identities}
 On paper this axiom requires to show that $q(id_{ft(X)}, X) = id_{ft(X)}$.

@@ -5,10 +5,31 @@ Per Martin-L{\"o}f.
 \newblock Intuitionistic type theory, 1980.
 \newblock Lecture notes recorded by Giovanni Sambin.
 
+\bibitem{dtt}
+Bengt Nordstr{\"o}m, Kent Petersson, and Jan~M Smith.
+\newblock {\em Programming in Martin-L{\"o}f’s type theory}.
+\newblock Oxford University Press Oxford, 1990.
+
 \bibitem{universalalgebra}
 Alfred~North Whitehead.
 \newblock {\em A treatise on universal algebra: with applications}.
 \newblock 1898.
+
+\bibitem{univalg2}
+Garrett Birkhoff.
+\newblock Universal algebra.
+\newblock In {\em Comptes Rendus du Premier Congrès Canadien de
+  Mathématiques}, pages 310--326. University of Toronto Press, Toronto, 1946.
+
+\bibitem{univalg3}
+Paul~Moritz Cohn.
+\newblock {\em Universal algebra}.
+\newblock Harper's series in modern mathematics. Harper \& Row, 1965.
+
+\bibitem{univalg4}
+{Stanley N.} Burris and H.P. Sankappanavar.
+\newblock {\em A Course In Universal Algebra}.
+\newblock Springer-Verlag, 1981.
 
 \bibitem{VoevodskyFiore}
 V.~Voevodsky and M.~Fiore.
